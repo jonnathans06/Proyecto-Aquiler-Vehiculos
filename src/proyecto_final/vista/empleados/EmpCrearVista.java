@@ -3,7 +3,6 @@ package proyecto_final.vista.empleados;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class EmpCrearVista extends javax.swing.JInternalFrame {
@@ -21,96 +20,52 @@ public class EmpCrearVista extends javax.swing.JInternalFrame {
         return btnCancelar;
     }
 
-    public void setBtnCancelar(JButton btnCancelar) {
-        this.btnCancelar = btnCancelar;
-    }
-
     public JButton getBtnLimpiar() {
         return btnLimpiar;
-    }
-
-    public void setBtnLimpiar(JButton btnLimpiar) {
-        this.btnLimpiar = btnLimpiar;
     }
 
     public JButton getBtnRegistrar() {
         return btnRegistrar;
     }
 
-    public void setBtnRegistrar(JButton btnRegistrar) {
-        this.btnRegistrar = btnRegistrar;
-    }
-
     public JComboBox<String> getCbxCargo() {
         return cbxCargo;
-    }
-
-    public void setCbxCargo(JComboBox<String> cbxCargo) {
-        this.cbxCargo = cbxCargo;
     }
 
     public JComboBox<String> getCbxTipoPersonal() {
         return cbxTipoPersonal;
     }
 
-    public void setCbxTipoPersonal(JComboBox<String> cbxTipoPersonal) {
-        this.cbxTipoPersonal = cbxTipoPersonal;
-    }
-
-    public JPasswordField getjPasswordField1() {
-        return jPasswordField1;
-    }
-
-    public void setjPasswordField1(JPasswordField jPasswordField1) {
-        this.jPasswordField1 = jPasswordField1;
-    }
-
     public JTextField getTxtApellido() {
         return txtApellido;
-    }
-
-    public void setTxtApellido(JTextField txtApellido) {
-        this.txtApellido = txtApellido;
     }
 
     public JTextField getTxtCedula() {
         return txtCedula;
     }
 
-    public void setTxtCedula(JTextField txtCedula) {
-        this.txtCedula = txtCedula;
-    }
-
     public JTextField getTxtCorreo() {
         return txtCorreo;
-    }
-
-    public void setTxtCorreo(JTextField txtCorreo) {
-        this.txtCorreo = txtCorreo;
     }
 
     public JTextField getTxtDireccion() {
         return txtDireccion;
     }
 
-    public void setTxtDireccion(JTextField txtDireccion) {
-        this.txtDireccion = txtDireccion;
-    }
-
     public JTextField getTxtNombre() {
         return txtNombre;
-    }
-
-    public void setTxtNombre(JTextField txtNombre) {
-        this.txtNombre = txtNombre;
     }
 
     public JTextField getTxtTelefono() {
         return txtTelefono;
     }
 
-    public void setTxtTelefono(JTextField txtTelefono) {
-        this.txtTelefono = txtTelefono;
+    public JTextField getTxtPassword() {
+        return txtPassword;
+    }
+
+    public JTextField getTxtUsername() {
+        return txtUsername;
     }
     
     public void limpiar(){
@@ -120,6 +75,8 @@ public class EmpCrearVista extends javax.swing.JInternalFrame {
         txtNombre.setText("");
         txtTelefono.setText("");
         txtDireccion.setText("");
+        txtUsername.setText("");
+        txtPassword.setText("");
     }
     
     public void cargarCargos(){
@@ -171,6 +128,14 @@ public class EmpCrearVista extends javax.swing.JInternalFrame {
         txtDireccion = new javax.swing.JTextField();
         lblCargo = new javax.swing.JLabel();
         cbxCargo = new javax.swing.JComboBox<>();
+        jSeparator3 = new javax.swing.JSeparator();
+        jSeparator4 = new javax.swing.JSeparator();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        lblNombre1 = new javax.swing.JLabel();
+        txtUsername = new javax.swing.JTextField();
+        lblNombre2 = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JTextField();
 
         jPasswordField1.setText("jPasswordField1");
 
@@ -333,6 +298,36 @@ public class EmpCrearVista extends javax.swing.JInternalFrame {
         cbxCargo.setForeground(new java.awt.Color(81, 89, 108));
         cbxCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jSeparator3.setForeground(new java.awt.Color(81, 89, 108));
+
+        jSeparator4.setForeground(new java.awt.Color(81, 89, 108));
+
+        jLabel2.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(81, 89, 108));
+        jLabel2.setText("Datos Generales");
+
+        jLabel3.setFont(new java.awt.Font("SansSerif", 3, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(81, 89, 108));
+        jLabel3.setText("Credenciales (No obligatorias)");
+
+        lblNombre1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        lblNombre1.setForeground(new java.awt.Color(81, 89, 108));
+        lblNombre1.setText("N. Usuario:");
+
+        txtUsername.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        txtUsername.setForeground(new java.awt.Color(81, 89, 108));
+        txtUsername.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
+        txtUsername.setEnabled(false);
+
+        lblNombre2.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        lblNombre2.setForeground(new java.awt.Color(81, 89, 108));
+        lblNombre2.setText("Contraseña:");
+
+        txtPassword.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        txtPassword.setForeground(new java.awt.Color(81, 89, 108));
+        txtPassword.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
+        txtPassword.setEnabled(false);
+
         javax.swing.GroupLayout panelDatosLayout = new javax.swing.GroupLayout(panelDatos);
         panelDatos.setLayout(panelDatosLayout);
         panelDatosLayout.setHorizontalGroup(
@@ -347,11 +342,6 @@ public class EmpCrearVista extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelDatosLayout.createSequentialGroup()
-                                .addGap(191, 191, 191)
-                                .addComponent(lblTelefono)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panelDatosLayout.createSequentialGroup()
                                 .addGap(194, 194, 194)
                                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(panelDatosLayout.createSequentialGroup()
@@ -361,7 +351,12 @@ public class EmpCrearVista extends javax.swing.JInternalFrame {
                                     .addGroup(panelDatosLayout.createSequentialGroup()
                                         .addComponent(lblNombre)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(panelDatosLayout.createSequentialGroup()
+                                .addGap(191, 191, 191)
+                                .addComponent(lblTelefono)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(159, 159, 159)
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(panelDatosLayout.createSequentialGroup()
@@ -386,13 +381,38 @@ public class EmpCrearVista extends javax.swing.JInternalFrame {
                                 .addGap(299, 299, 299))))
                     .addGroup(panelDatosLayout.createSequentialGroup()
                         .addGap(35, 35, 35)
-                        .addComponent(jSeparator1)))
+                        .addComponent(jSeparator1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDatosLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 812, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(299, 299, 299))
+                    .addGroup(panelDatosLayout.createSequentialGroup()
+                        .addGap(191, 191, 191)
+                        .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(panelDatosLayout.createSequentialGroup()
+                                    .addComponent(lblNombre1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(157, 157, 157)
+                                    .addComponent(lblNombre2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 812, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelDatosLayout.setVerticalGroup(
             panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelDatosLayout.createSequentialGroup()
-                .addGap(103, 103, 103)
+                .addGap(32, 32, 32)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -424,7 +444,18 @@ public class EmpCrearVista extends javax.swing.JInternalFrame {
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cbxCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
+                .addGap(35, 35, 35)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -494,15 +525,21 @@ public class EmpCrearVista extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cbxCargo;
     private javax.swing.JComboBox<String> cbxTipoPersonal;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JLabel lblApellido;
     private javax.swing.JLabel lblCargo;
     private javax.swing.JLabel lblCedula;
     private javax.swing.JLabel lblCorreo;
     private javax.swing.JLabel lblDireccion;
     private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblNombre1;
+    private javax.swing.JLabel lblNombre2;
     private javax.swing.JLabel lblTelefono;
     private javax.swing.JLabel lblTipoPersonal;
     private javax.swing.JPanel panelCentral;
@@ -515,7 +552,9 @@ public class EmpCrearVista extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtTelefono;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 
 }

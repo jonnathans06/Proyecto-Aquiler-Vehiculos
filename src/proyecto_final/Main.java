@@ -21,7 +21,6 @@ import proyecto_final.vista.empleados.EmpActualizarVista;
 import proyecto_final.vista.empleados.EmpCrearVista;
 import proyecto_final.vista.empleados.EmpEliminarVista;
 import proyecto_final.vista.empleados.EmpListarVista;
-import proyecto_final.vista.empleados.EmpUsuarioVista;
 import proyecto_final.vista.login.LoginVista;
 import proyecto_final.vista.reservas.ResActualizarVista;
 import proyecto_final.vista.reservas.ResCrearVista;
@@ -37,7 +36,6 @@ public class Main {
         EmpListarVista empListarVista = new EmpListarVista();
         EmpActualizarVista empActVista = new EmpActualizarVista();
         EmpEliminarVista empEliVista = new EmpEliminarVista();
-        EmpUsuarioVista empUsuVista = new EmpUsuarioVista();
         
         //Vistas Clientes
         CliCrearVista cliCrearVista = new CliCrearVista();
@@ -74,7 +72,7 @@ public class Main {
         
         //Controladores
         LoginControlador loginControlador = new LoginControlador(daoUsuario, loginVista, principalVista);
-        EmpleadoControlador empControlador = new EmpleadoControlador(empCrearVista, empListarVista, empActVista, empEliVista, empUsuVista, daoEmpleado, daoUsuario);
+        EmpleadoControlador empControlador = new EmpleadoControlador(empCrearVista, empListarVista, empActVista, empEliVista, daoEmpleado, daoUsuario);
     }
     
 }
