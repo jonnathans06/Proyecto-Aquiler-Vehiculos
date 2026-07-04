@@ -30,6 +30,9 @@ public class EmpleadoControlador {
         this.daoEmpleado = daoEmpleado;
         this.daoUsuario = daoUsuario;
         accionesBotones();
+        
+        // Metodos de vistas
+        empCrearVista.habilitarCamposUsuario();
     }
     
     private void accionesBotones() {
@@ -79,7 +82,8 @@ public class EmpleadoControlador {
 
     //Empleados
     private void crearEmpleado(){
-        boolean inserto = false;
+        boolean insertoEmp = false;
+        boolean insertoUsu = false;
         try {
             String cedula = empCrearVista.getTxtCedula().getText().trim();
             String nombres = empCrearVista.getTxtNombre().getText().trim();
@@ -90,25 +94,59 @@ public class EmpleadoControlador {
             String tipoPersonal = empCrearVista.getCbxTipoPersonal().getSelectedItem().toString().toUpperCase().trim();
             String cargo = empCrearVista.getCbxCargo().getSelectedItem().toString().toUpperCase().trim();
             
-            inserto = daoEmpleado.crearEmpleado(new Empleado(cedula, nombres, apellidos, direccion, telefono, correo, tipoPersonal, cargo));
-                                   
             if (cedula.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || direccion.isEmpty() || telefono.isEmpty() || correo.isEmpty()) {
                 empCrearVista.mostrarMensaje("Todos los campos son obligatorios");
+                return;
             } else if (!cedula.matches("\\d+")) {
-                empCrearVista.mostrarMensaje("Ingrese solo numeros en el campo cedula");
+                empCrearVista.mostrarMensaje("Ingrese solo números en el campo cédula");
+                return;
+            } else if (cedula.length() != 10) {
+                empCrearVista.mostrarMensaje("Se requiere 10 dígitos de cédula");
+                return;
             } else if (telefono.length() != 10) {
                 empCrearVista.mostrarMensaje("Se requiere 10 dígitos de teléfono");
-            } else if (cedula.length() != 10) {
-                empCrearVista.mostrarMensaje("Se requiere 10 dígitos de cedula");
-            } else if (inserto) {
+                return;
+            }
+
+            // Crear empleado
+            Empleado empTemp = new Empleado(cedula, nombres, apellidos, direccion, telefono, correo, tipoPersonal, cargo);
+            insertoEmp = daoEmpleado.crearEmpleado(empTemp);
+
+            if (!insertoEmp) {
+                empCrearVista.mostrarMensaje("Error Al Registrar Empleado");
+                return;
+            }
+
+            // Crear usuario
+            if (tipoPersonal.equals("ATENCION AL CLIENTE")) {
+                insertoUsu = crearUsuario(empTemp);
+                if (insertoUsu) {
+                    empCrearVista.mostrarMensaje("Empleado y Usuario Registrados Exitosamente");
+                    empCrearVista.limpiar();
+                } else {
+                    empCrearVista.mostrarMensaje("Empleado creado, pero error al crear usuario");
+                }
+            } else {
                 empCrearVista.mostrarMensaje("Empleado Registrado Exitosamente");
                 empCrearVista.limpiar();
-            } else {
-                empCrearVista.mostrarMensaje("Error Al Registrar Empleado");
             }
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private boolean crearUsuario(Empleado empleado) {
+        String username = empCrearVista.getTxtUsername().getText().trim();
+        String password = empCrearVista.getTxtPassword().getText().trim();
+
+        if (username.isEmpty() || password.isEmpty()) {
+            empCrearVista.mostrarMensaje("Username y contraseña son obligatorios");
+            return false;
+        }
+
+        Usuario usuario = new Usuario(username, password, empleado);
+        return daoUsuario.crearUsuario(usuario);
     }
     
     private void buscarPorCoincidencia(){
