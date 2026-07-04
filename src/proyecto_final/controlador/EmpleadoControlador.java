@@ -9,7 +9,6 @@ import proyecto_final.vista.empleados.EmpActualizarVista;
 import proyecto_final.vista.empleados.EmpCrearVista;
 import proyecto_final.vista.empleados.EmpEliminarVista;
 import proyecto_final.vista.empleados.EmpListarVista;
-import proyecto_final.vista.empleados.EmpUsuarioVista;
 
 public class EmpleadoControlador {
     private Empleado empleado;
@@ -18,18 +17,16 @@ public class EmpleadoControlador {
     private EmpListarVista empListarVista;
     private EmpActualizarVista empActVista;
     private EmpEliminarVista empEliVista;
-    private EmpUsuarioVista empUsuVista;
     private DaoEmpleado daoEmpleado;
     private DaoUsuario daoUsuario; 
 
     public EmpleadoControlador(EmpCrearVista empCrearVista, EmpListarVista empListarVista, EmpActualizarVista empActVista, EmpEliminarVista empEliminarVista,
-            EmpUsuarioVista empUsuVista, DaoEmpleado daoEmpleado, DaoUsuario daoUsuario) {
+                               DaoEmpleado daoEmpleado, DaoUsuario daoUsuario) {
         this.empActual = null;
         this.empCrearVista = empCrearVista;
         this.empListarVista = empListarVista;
         this.empActVista = empActVista;
         this.empEliVista = empEliminarVista;
-        this.empUsuVista = empUsuVista;
         this.daoEmpleado = daoEmpleado;
         this.daoUsuario = daoUsuario;
         accionesBotones();
@@ -111,28 +108,6 @@ public class EmpleadoControlador {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        }
-    }
-    
-    public void crearUsuario(Empleado emp){
-        boolean inserto = false;
-        empCrearVista.setVisible(false);
-        try {
-            String username = empUsuVista.getTxtUsername().getText().trim();
-            String contrasenia = empUsuVista.getTxtContrasenia().getText().trim();
-            
-            inserto = daoUsuario.crearUsuario(new Usuario(username, contrasenia, emp));
-            
-            if (inserto) {
-                empUsuVista.mostrarMensaje("Crendenciales registradas correctamente");
-                empUsuVista.limpiar();
-                empUsuVista.dispose();
-                empCrearVista.setVisible(true);
-            } else {
-                empUsuVista.mostrarMensaje("Error al crear credenciales");
-            }
-            
-        } catch (Exception e) {
         }
     }
     
