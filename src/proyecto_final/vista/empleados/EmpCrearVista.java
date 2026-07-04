@@ -75,7 +75,10 @@ public class EmpCrearVista extends javax.swing.JInternalFrame {
         if (tipoSeleccionado.equals("ATENCION AL CLIENTE")) {
             this.getTxtUsername().setEnabled(true);
             this.getTxtPassword().setEnabled(true);
+            this.getCbxCargo().removeAllItems();
+            this.getCbxCargo().addItem("VENTAS");
         } else {
+            this.cargarCargos();
             this.getTxtUsername().setEnabled(false);
             this.getTxtPassword().setEnabled(false);
             this.getTxtUsername().setText("");
