@@ -33,24 +33,23 @@ public class DaoClienteImp implements DaoCliente{
         }
         return false;
     }
-
+    
     @Override
-    public Cliente buscarClientePorCedula(String cedula) {
+    public Cliente buscarClientePorCedula(String busqueda) {
         String query = "select * from alq_clientes where cli_cedula = ?";
         try {
             PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1, cedula);
+            ps.setString(1, busqueda);
             ResultSet rs = ps.executeQuery();
             
             if (rs.next()) {
-                String cedulaEnc = rs.getString("cli_cedula");
+                String cedula = rs.getString("cli_cedula");
                 String nombre = rs.getString("cli_nombre");
                 String apellido = rs.getString("cli_apellido");
                 String direccion = rs.getString("cli_direccion");
                 String telefono = rs.getString("cli_telefono");
                 String correo = rs.getString("cli_correo");
-                
-                return new Cliente(cedulaEnc, nombre, apellido, direccion, telefono, correo);
+                return new Cliente(cedula, nombre, apellido, direccion, telefono, correo);
             }
             
             ps.close();
@@ -61,24 +60,25 @@ public class DaoClienteImp implements DaoCliente{
         }
         return null;
     }
-
+    
     @Override
-    public List<Cliente> buscarPorCoincidencia(String nombre) {
+    public List<Cliente> buscarClientes(String busqueda) {
         List<Cliente> clientes = new ArrayList<>();
-        String query = "select * from alq_clientes where cli_nombre = ?";
+        String query = "select * from alq_clientes where cli_cedula = ? or cli_nombre like ?";
         try {
             PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1, nombre);
+            ps.setString(1, busqueda);
+            ps.setString(2, "%" + busqueda + "%");
             ResultSet rs = ps.executeQuery();
             
             while (rs.next()) {
                 String cedula = rs.getString("cli_cedula");
-                String nombreEnc = rs.getString("cli_nombre");
+                String nombre = rs.getString("cli_nombre");
                 String apellido = rs.getString("cli_apellido");
                 String direccion = rs.getString("cli_direccion");
                 String telefono = rs.getString("cli_telefono");
                 String correo = rs.getString("cli_correo");
-                clientes.add(new Cliente(cedula, nombreEnc, apellido, direccion, telefono, correo));
+                clientes.add(new Cliente(cedula, nombre, apellido, direccion, telefono, correo));
             }
             
             ps.close();

@@ -38,22 +38,7 @@ public class CliListarVista extends javax.swing.JInternalFrame {
         }
         tblDatos.setModel(modelo);
     }
-
-    public void mostrarDatosCliente(Cliente c) {
-        DefaultTableModel modelo = (DefaultTableModel) tblDatos.getModel();
-        modelo.setNumRows(0);
-        Object[] fila = {
-            c.getCliCedula(),
-            c.getCliNombre(),
-            c.getCliApellido(),
-            c.getCliTelefono(),
-            c.getCliDireccion(),
-            c.getCliCorreo()
-        };
-        modelo.addRow(fila);
-        tblDatos.setModel(modelo);
-    }
-
+    
     public JButton getBtnBuscar() {
         return btnBuscar;
     }

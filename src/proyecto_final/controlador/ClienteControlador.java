@@ -1,5 +1,6 @@
 package proyecto_final.controlador;
 
+import java.util.List;
 import proyecto_final.vista.clientes.CliActualizarVista;
 import proyecto_final.vista.clientes.CliCrearVista;
 import proyecto_final.vista.clientes.CliEliminarVista;
@@ -13,6 +14,7 @@ public class ClienteControlador {
     private CliActualizarVista cliActualizarVista;
     private CliEliminarVista cliEliminarVista;
     private DaoCliente daoCliente; 
+    private Cliente cliAct = null;
 
     public ClienteControlador(CliCrearVista cliCrearVista, CliListarVista cliListarVista, CliActualizarVista cliActualizarVista, 
                              CliEliminarVista cliEliminarVista, DaoCliente daoCliente) {
@@ -30,6 +32,16 @@ public class ClienteControlador {
         // Crear Cliente
         cliCrearVista.getBtnRegistrar().addActionListener((e) -> {
             crearCliente();
+        });
+        
+        // Listar todos los clientes
+        cliListarVista.getBtnListar().addActionListener((e) -> {
+            listarTodos();
+        });
+        
+        //Buscar cliente
+        cliListarVista.getBtnBuscar().addActionListener((e) -> {
+            buscarCliente();
         });
     }
     
@@ -62,6 +74,20 @@ public class ClienteControlador {
             cliCrearVista.limpiar();
         } else {
             cliCrearVista.mostrarMensaje("Error al Registrar Cliente");
+        }
+    }
+    
+    private void listarTodos(){
+        cliListarVista.mostrarDatosCliente(daoCliente.listarTodods());
+    }
+    
+    private void buscarCliente(){
+        List<Cliente> clientes = daoCliente.buscarClientes(cliListarVista.getTxtBusqueda().getText().trim());
+        
+        if (clientes.isEmpty()) {
+            cliListarVista.mostrarMensajes("Cliente no encontrado");
+        } else {
+            cliListarVista.mostrarDatosCliente(clientes);
         }
     }
 }
