@@ -80,7 +80,6 @@ public class EmpleadoControlador {
         });
     }
 
-    //Empleados
     private void crearEmpleado(){
         boolean insertoEmp = false;
         boolean insertoUsu = false;

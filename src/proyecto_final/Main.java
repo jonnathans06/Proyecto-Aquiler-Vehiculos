@@ -1,9 +1,12 @@
 package proyecto_final;
 
+import proyecto_final.controlador.ClienteControlador;
 import proyecto_final.controlador.EmpleadoControlador;
 import proyecto_final.controlador.LoginControlador;
+import proyecto_final.dao.DaoClienteImp;
 import proyecto_final.dao.DaoEmpleadoImp;
 import proyecto_final.dao.DaoUsuarioImp;
+import proyecto_final.dao.interfaces.DaoCliente;
 import proyecto_final.dao.interfaces.DaoEmpleado;
 import proyecto_final.dao.interfaces.DaoUsuario;
 import proyecto_final.vista.SistemaVista;
@@ -69,10 +72,12 @@ public class Main {
         // Daos
         DaoEmpleado daoEmpleado = new DaoEmpleadoImp();
         DaoUsuario daoUsuario = new DaoUsuarioImp();
+        DaoCliente daoCliente = new DaoClienteImp();
         
         //Controladores
         LoginControlador loginControlador = new LoginControlador(daoUsuario, loginVista, principalVista);
         EmpleadoControlador empControlador = new EmpleadoControlador(empCrearVista, empListarVista, empActVista, empEliVista, daoEmpleado, daoUsuario);
+        ClienteControlador cliControlador = new ClienteControlador(cliCrearVista, cliListarVista, cliActualizarVista, cliEliminarVista, daoCliente);
     }
     
 }
