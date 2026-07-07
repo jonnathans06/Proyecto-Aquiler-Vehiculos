@@ -9,14 +9,14 @@ public class Cliente {
     private String cliCorreo;
     private String cliEstado;
     
-    public Cliente(String cliCedula, String cliNombre, String cliApellido, String cliDireccion, String cliTelefono, String cliCorreo) {
+    public Cliente(String cliCedula, String cliNombre, String cliApellido, String cliDireccion, String cliTelefono, String cliCorreo, String cliEstado) {
         this.cliCedula = cliCedula;
         this.cliNombre = cliNombre;
         this.cliApellido = cliApellido;
         this.cliDireccion = cliDireccion;
         this.cliTelefono = cliTelefono;
         this.cliCorreo = cliCorreo;
-        this.cliEstado = "ACTIVO";
+        this.cliEstado = cliEstado;
     }
 
     public String getCliCedula() {

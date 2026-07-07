@@ -208,7 +208,6 @@ public class DaoEmpleadoImp implements DaoEmpleado{
             ps1.executeUpdate();
             ps1.close();
             
-            // Desactivar Empleado
             PreparedStatement ps2 = conexionBD.prepareStatement(queryEmp);
             ps2.setString(1, "INACTIVO");
             ps2.setString(2, empCedula);

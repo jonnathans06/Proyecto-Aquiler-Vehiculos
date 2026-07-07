@@ -49,7 +49,8 @@ public class DaoClienteImp implements DaoCliente{
                 String direccion = rs.getString("cli_direccion");
                 String telefono = rs.getString("cli_telefono");
                 String correo = rs.getString("cli_correo");
-                return new Cliente(cedula, nombre, apellido, direccion, telefono, correo);
+                String estado = rs.getString("cli_estado");
+                return new Cliente(cedula, nombre, apellido, direccion, telefono, correo, estado);
             }
             
             ps.close();
@@ -78,7 +79,8 @@ public class DaoClienteImp implements DaoCliente{
                 String direccion = rs.getString("cli_direccion");
                 String telefono = rs.getString("cli_telefono");
                 String correo = rs.getString("cli_correo");
-                clientes.add(new Cliente(cedula, nombre, apellido, direccion, telefono, correo));
+                String estado = rs.getString("cli_estado");
+                clientes.add(new Cliente(cedula, nombre, apellido, direccion, telefono, correo, estado));
             }
             
             ps.close();
@@ -105,7 +107,8 @@ public class DaoClienteImp implements DaoCliente{
                 String direccion = rs.getString("cli_direccion");
                 String telefono = rs.getString("cli_telefono");
                 String correo = rs.getString("cli_correo");
-                clientes.add(new Cliente(cedula, nombreEnc, apellido, direccion, telefono, correo));
+                String estado = rs.getString("cli_estado");
+                clientes.add(new Cliente(cedula, nombreEnc, apellido, direccion, telefono, correo, estado));
             }
             
             ps.close();
@@ -118,9 +121,9 @@ public class DaoClienteImp implements DaoCliente{
     }
 
     @Override
-public boolean actualizarCliente(Cliente cliente) {
+    public boolean actualizarCliente(Cliente cliente) {
         String query = "update ALQ_CLIENTES set cli_nombre = ?, cli_apellido = ?, cli_direccion = ?, "
-                     + "cli_telefono = ?, cli_correo = ? where cli_cedula = ?";
+                     + "cli_telefono = ?, cli_correo = ? , cli_estado = ? where cli_cedula = ?";
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, cliente.getCliNombre());
@@ -128,7 +131,8 @@ public boolean actualizarCliente(Cliente cliente) {
             ps.setString(3, cliente.getCliDireccion());
             ps.setString(4, cliente.getCliTelefono());
             ps.setString(5, cliente.getCliCorreo());
-            ps.setString(6, cliente.getCliCedula());
+            ps.setString(6, cliente.getCliEstado());
+            ps.setString(7, cliente.getCliCedula());
 
             ps.executeUpdate();
             ps.close();
@@ -143,6 +147,19 @@ public boolean actualizarCliente(Cliente cliente) {
 
     @Override
     public boolean eliminarCliente(Cliente cliente) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String query = "update ALQ_CLIENTES set cli_estado = 'INACTIVO' where cli_cedula = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, cliente.getCliCedula());
+
+            ps.executeUpdate();
+            ps.close();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 }
