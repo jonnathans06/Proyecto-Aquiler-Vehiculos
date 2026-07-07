@@ -1,11 +1,9 @@
 package proyecto_final.vista.clientes;
 
-import proyecto_final.vista.empleados.*;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import proyecto_final.modelo.Cliente;
 import proyecto_final.modelo.Empleado;
 
 public class CliEliminarVista extends javax.swing.JInternalFrame {
@@ -72,6 +70,15 @@ public class CliEliminarVista extends javax.swing.JInternalFrame {
     
     public void mostrarMensaje(String m){
         JOptionPane.showMessageDialog(rootPane, m);
+    }
+    
+    public void mostrarDatosCliente(Cliente c) {
+        txtCedula.setText(c.getCliCedula());
+        txtNombre.setText(c.getCliNombre());
+        txtApellido.setText(c.getCliApellido());
+        txtTelefono.setText(c.getCliTelefono());
+        txtDireccion.setText(c.getCliDireccion());
+        txtCorreo.setText(c.getCliCorreo());
     }
     
     public void limpiar(){
@@ -216,11 +223,15 @@ public class CliEliminarVista extends javax.swing.JInternalFrame {
         lblCedula.setForeground(new java.awt.Color(81, 89, 108));
         lblCedula.setText("Cédula:");
 
+        txtCedula.setEditable(false);
+        txtCedula.setBackground(new java.awt.Color(255, 255, 255));
         txtCedula.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         txtCedula.setForeground(new java.awt.Color(81, 89, 108));
         txtCedula.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
         txtCedula.setEnabled(false);
 
+        txtNombre.setEditable(false);
+        txtNombre.setBackground(new java.awt.Color(255, 255, 255));
         txtNombre.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         txtNombre.setForeground(new java.awt.Color(81, 89, 108));
         txtNombre.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
@@ -230,6 +241,8 @@ public class CliEliminarVista extends javax.swing.JInternalFrame {
         lblNombre.setForeground(new java.awt.Color(81, 89, 108));
         lblNombre.setText("Nombres:");
 
+        txtApellido.setEditable(false);
+        txtApellido.setBackground(new java.awt.Color(255, 255, 255));
         txtApellido.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         txtApellido.setForeground(new java.awt.Color(81, 89, 108));
         txtApellido.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
@@ -239,6 +252,8 @@ public class CliEliminarVista extends javax.swing.JInternalFrame {
         lblApellido.setForeground(new java.awt.Color(81, 89, 108));
         lblApellido.setText("Apellidos:");
 
+        txtTelefono.setEditable(false);
+        txtTelefono.setBackground(new java.awt.Color(255, 255, 255));
         txtTelefono.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         txtTelefono.setForeground(new java.awt.Color(81, 89, 108));
         txtTelefono.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
@@ -252,6 +267,8 @@ public class CliEliminarVista extends javax.swing.JInternalFrame {
         lblCorreo.setForeground(new java.awt.Color(81, 89, 108));
         lblCorreo.setText("Correo:");
 
+        txtCorreo.setEditable(false);
+        txtCorreo.setBackground(new java.awt.Color(255, 255, 255));
         txtCorreo.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         txtCorreo.setForeground(new java.awt.Color(81, 89, 108));
         txtCorreo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
@@ -263,6 +280,8 @@ public class CliEliminarVista extends javax.swing.JInternalFrame {
         lblDireccion.setForeground(new java.awt.Color(81, 89, 108));
         lblDireccion.setText("Direccion:");
 
+        txtDireccion.setEditable(false);
+        txtDireccion.setBackground(new java.awt.Color(255, 255, 255));
         txtDireccion.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         txtDireccion.setForeground(new java.awt.Color(81, 89, 108));
         txtDireccion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
@@ -274,7 +293,7 @@ public class CliEliminarVista extends javax.swing.JInternalFrame {
         jLabel2.setForeground(new java.awt.Color(81, 89, 108));
         jLabel2.setText("Buscar por cedula:");
 
-        txtBusqueda.setFont(new java.awt.Font("Sans Serif Collection", 0, 12)); // NOI18N
+        txtBusqueda.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         txtBusqueda.setForeground(new java.awt.Color(81, 89, 108));
         txtBusqueda.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
 

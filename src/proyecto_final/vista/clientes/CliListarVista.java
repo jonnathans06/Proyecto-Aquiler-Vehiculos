@@ -32,7 +32,8 @@ public class CliListarVista extends javax.swing.JInternalFrame {
                 c.getCliApellido(),
                 c.getCliTelefono(),
                 c.getCliDireccion(),
-                c.getCliCorreo()
+                c.getCliCorreo(),
+                c.getCliEstado()
             };
             modelo.addRow(fila);
         }
@@ -170,11 +171,11 @@ public class CliListarVista extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Cédula", "Nombres", "Apellidos", "Teléono", "Direccion", "Correo"
+                "Cédula", "Nombres", "Apellidos", "Teléono", "Direccion", "Correo", "Estado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
