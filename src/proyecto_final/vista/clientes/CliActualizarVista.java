@@ -3,6 +3,7 @@ package proyecto_final.vista.clientes;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import proyecto_final.modelo.Cliente;
 
 public class CliActualizarVista extends javax.swing.JInternalFrame {
 
@@ -13,6 +14,10 @@ public class CliActualizarVista extends javax.swing.JInternalFrame {
         setVisible(true);
     }
 
+    public JButton getBtnBuscar() {
+        return btnBuscar;
+    }
+    
     public JButton getBtnCancelar() {
         return btnCancelar;
     }
@@ -21,8 +26,8 @@ public class CliActualizarVista extends javax.swing.JInternalFrame {
         return btnLimpiar;
     }
 
-    public JButton getBtnRegistrar() {
-        return btnRegistrar;
+    public JButton getBtnActualizar() {
+        return btnActualizar;
     }
 
     public JTextField getTxtApellido() {
@@ -48,6 +53,19 @@ public class CliActualizarVista extends javax.swing.JInternalFrame {
     public JTextField getTxtTelefono() {
         return txtTelefono;
     }
+
+    public JTextField getTxtBusqueda() {
+        return txtBusqueda;
+    }
+    
+    public void mostrarDatosCliente(Cliente c) {
+        txtCedula.setText(c.getCliCedula());
+        txtNombre.setText(c.getCliNombre());
+        txtApellido.setText(c.getCliApellido());
+        txtTelefono.setText(c.getCliTelefono());
+        txtDireccion.setText(c.getCliDireccion());
+        txtCorreo.setText(c.getCliCorreo());
+    }
     
     public void limpiar(){
         txtApellido.setText("");
@@ -72,7 +90,7 @@ public class CliActualizarVista extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         panelInferior = new javax.swing.JPanel();
-        btnRegistrar = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         panelCentral = new javax.swing.JPanel();
@@ -92,8 +110,8 @@ public class CliActualizarVista extends javax.swing.JInternalFrame {
         txtDireccion = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        txtBusqueda = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
 
         jPasswordField1.setText("jPasswordField1");
 
@@ -136,11 +154,11 @@ public class CliActualizarVista extends javax.swing.JInternalFrame {
 
         panelInferior.setBackground(new java.awt.Color(255, 255, 255));
 
-        btnRegistrar.setBackground(new java.awt.Color(81, 89, 108));
-        btnRegistrar.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        btnRegistrar.setForeground(new java.awt.Color(204, 204, 204));
-        btnRegistrar.setText("Registrar");
-        btnRegistrar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnActualizar.setBackground(new java.awt.Color(81, 89, 108));
+        btnActualizar.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        btnActualizar.setForeground(new java.awt.Color(204, 204, 204));
+        btnActualizar.setText("Registrar");
+        btnActualizar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         btnLimpiar.setBackground(new java.awt.Color(204, 204, 204));
         btnLimpiar.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
@@ -164,7 +182,7 @@ public class CliActualizarVista extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
         );
         panelInferiorLayout.setVerticalGroup(
@@ -172,7 +190,7 @@ public class CliActualizarVista extends javax.swing.JInternalFrame {
             .addGroup(panelInferiorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(23, Short.MAX_VALUE))
@@ -195,9 +213,12 @@ public class CliActualizarVista extends javax.swing.JInternalFrame {
         lblCedula.setForeground(new java.awt.Color(81, 89, 108));
         lblCedula.setText("Cédula:");
 
+        txtCedula.setEditable(false);
+        txtCedula.setBackground(new java.awt.Color(255, 255, 255));
         txtCedula.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         txtCedula.setForeground(new java.awt.Color(81, 89, 108));
         txtCedula.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
+        txtCedula.setEnabled(false);
 
         txtNombre.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         txtNombre.setForeground(new java.awt.Color(81, 89, 108));
@@ -247,14 +268,14 @@ public class CliActualizarVista extends javax.swing.JInternalFrame {
         jLabel2.setForeground(new java.awt.Color(81, 89, 108));
         jLabel2.setText("Buscar por cedula:");
 
-        jTextField1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(81, 89, 108));
-        jTextField1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
+        txtBusqueda.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        txtBusqueda.setForeground(new java.awt.Color(81, 89, 108));
+        txtBusqueda.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
 
-        jButton1.setBackground(new java.awt.Color(81, 89, 108));
-        jButton1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Buscar");
+        btnBuscar.setBackground(new java.awt.Color(81, 89, 108));
+        btnBuscar.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscar.setText("Buscar");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -264,9 +285,9 @@ public class CliActualizarVista extends javax.swing.JInternalFrame {
                 .addGap(256, 256, 256)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(51, 51, 51)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(98, 98, 98)
-                .addComponent(jButton1)
+                .addComponent(btnBuscar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -275,8 +296,8 @@ public class CliActualizarVista extends javax.swing.JInternalFrame {
                 .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
 
@@ -422,17 +443,16 @@ public class CliActualizarVista extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnLimpiar;
-    private javax.swing.JButton btnRegistrar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblApellido;
     private javax.swing.JLabel lblCedula;
     private javax.swing.JLabel lblCorreo;
@@ -445,6 +465,7 @@ public class CliActualizarVista extends javax.swing.JInternalFrame {
     private javax.swing.JPanel panelPrincipal;
     private javax.swing.JPanel panelTitulo;
     private javax.swing.JTextField txtApellido;
+    private javax.swing.JTextField txtBusqueda;
     private javax.swing.JTextField txtCedula;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDireccion;
