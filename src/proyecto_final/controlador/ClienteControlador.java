@@ -57,6 +57,16 @@ public class ClienteControlador {
         cliActualizarVista.getBtnActualizar().addActionListener((e) -> {
             actualizarCliente();
         });
+        
+        //Buscar empleado eliminar
+        cliEliminarVista.getBtnBuscar().addActionListener((e) -> {
+            buscarClienteEliminar();
+        });
+
+        //Eliminar Empleado
+        cliEliminarVista.getBtnConfirmar().addActionListener((e) -> {
+            eliminarEmpleado();
+        });
     }
     
     // Clientes
@@ -80,7 +90,7 @@ public class ClienteControlador {
             cliCrearVista.mostrarMensaje("Número de telefono no valido");
             return;
         } else {
-            inserto = daoCliente.crearCliente(new Cliente(cedula, nombre, apellido, direccion, telefono, correo));
+            inserto = daoCliente.crearCliente(new Cliente(cedula, nombre, apellido, direccion, telefono, correo, "ACTIVO"));
         }
         
         if (inserto) {
@@ -111,6 +121,7 @@ public class ClienteControlador {
             cliActualizarVista.mostrarMensaje("Clientes no encontrados");
         } else {
             cliActualizarVista.mostrarDatosCliente(cliAct);
+            cliAct = null;
         }
     }
     
@@ -123,8 +134,9 @@ public class ClienteControlador {
         String direccion = cliActualizarVista.getTxtDireccion().getText().trim();
         String telefono = cliActualizarVista.getTxtTelefono().getText().trim();
         String correo = cliActualizarVista.getTxtCorreo().getText().trim();
+        String estado = cliActualizarVista.getCbxEstado().getSelectedItem().toString();
         
-        if (cedula.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || direccion.isEmpty() || telefono.isEmpty() || correo.isEmpty()) {
+        if (cedula.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || direccion.isEmpty() || telefono.isEmpty() || correo.isEmpty() || estado.isEmpty()) {
             cliActualizarVista.mostrarMensaje("Todos los campos son obligatorios");
             return;
         } else if (!cedula.matches("\\d+") || cedula.length() != 10) {
@@ -134,7 +146,7 @@ public class ClienteControlador {
             cliActualizarVista.mostrarMensaje("Número de telefono no valido");
             return;
         } else {
-            actualizo = daoCliente.actualizarCliente(new Cliente(cedula, nombre, apellido, direccion, telefono, correo));
+            actualizo = daoCliente.actualizarCliente(new Cliente(cedula, nombre, apellido, direccion, telefono, correo, estado));
         }
         
         if (actualizo) {
@@ -143,6 +155,27 @@ public class ClienteControlador {
             cliAct = null;
         } else {
             cliActualizarVista.mostrarMensaje("Error al Actualizar Cliente");
+        }
+    }
+    
+    private void buscarClienteEliminar(){
+        cliAct = daoCliente.buscarClientePorCedula(cliEliminarVista.getTxtBusqueda().getText().trim());
+        if (cliAct == null) {
+            cliEliminarVista.mostrarMensaje("Clientes no encontrados");
+            cliAct = null;
+        } else {
+            cliEliminarVista.mostrarDatosCliente(cliAct);
+        }
+    }
+    
+    private void eliminarEmpleado() {
+        boolean elimino = daoCliente.eliminarCliente(cliAct);
+        
+        if (elimino) {
+            cliEliminarVista.mostrarMensaje("Cliente Eliminado Exitosamente");
+            cliEliminarVista.limpiar();
+        } else {
+            cliEliminarVista.mostrarMensaje("Error al Eliminar Empleado");
         }
     }
 }
