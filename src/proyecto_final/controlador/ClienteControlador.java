@@ -1,5 +1,6 @@
 package proyecto_final.controlador;
 
+import java.util.ArrayList;
 import java.util.List;
 import proyecto_final.vista.clientes.CliActualizarVista;
 import proyecto_final.vista.clientes.CliCrearVista;
@@ -14,7 +15,8 @@ public class ClienteControlador {
     private CliActualizarVista cliActualizarVista;
     private CliEliminarVista cliEliminarVista;
     private DaoCliente daoCliente; 
-    private Cliente cliAct = null;
+    private Cliente cliAct;
+    private List<Cliente> clientes;
 
     public ClienteControlador(CliCrearVista cliCrearVista, CliListarVista cliListarVista, CliActualizarVista cliActualizarVista, 
                              CliEliminarVista cliEliminarVista, DaoCliente daoCliente) {
@@ -23,6 +25,8 @@ public class ClienteControlador {
         this.cliActualizarVista = cliActualizarVista;
         this.cliEliminarVista = cliEliminarVista;
         this.daoCliente = daoCliente;
+        this.cliAct = null;
+        this.clientes = new ArrayList<>();
         configurarAccionesBotones();
     }
     
@@ -41,7 +45,17 @@ public class ClienteControlador {
         
         //Buscar cliente
         cliListarVista.getBtnBuscar().addActionListener((e) -> {
-            buscarCliente();
+            listarClientes();
+        });
+        
+        //Buscar cliente actualizar
+        cliActualizarVista.getBtnBuscar().addActionListener((e) -> {
+            buscarClienteActualizar();
+        });
+        
+        //Actualizar Cliente
+        cliActualizarVista.getBtnActualizar().addActionListener((e) -> {
+            actualizarCliente();
         });
     }
     
@@ -81,13 +95,54 @@ public class ClienteControlador {
         cliListarVista.mostrarDatosCliente(daoCliente.listarTodods());
     }
     
-    private void buscarCliente(){
-        List<Cliente> clientes = daoCliente.buscarClientes(cliListarVista.getTxtBusqueda().getText().trim());
-        
+    private void listarClientes(){
+        clientes = daoCliente.buscarClientes(cliListarVista.getTxtBusqueda().getText().trim());
         if (clientes.isEmpty()) {
-            cliListarVista.mostrarMensajes("Cliente no encontrado");
+            cliListarVista.mostrarMensajes("Clientes no encontrados");
         } else {
             cliListarVista.mostrarDatosCliente(clientes);
+            clientes.clear();
+        }
+    }
+    
+    private void buscarClienteActualizar(){
+        cliAct = daoCliente.buscarClientePorCedula(cliActualizarVista.getTxtBusqueda().getText().trim());
+        if (cliAct == null) {
+            cliActualizarVista.mostrarMensaje("Clientes no encontrados");
+        } else {
+            cliActualizarVista.mostrarDatosCliente(cliAct);
+        }
+    }
+    
+    private void actualizarCliente(){
+        boolean actualizo = false;
+        
+        String cedula = cliActualizarVista.getTxtCedula().getText().trim();
+        String nombre = cliActualizarVista.getTxtNombre().getText().trim();
+        String apellido = cliActualizarVista.getTxtApellido().getText().trim();
+        String direccion = cliActualizarVista.getTxtDireccion().getText().trim();
+        String telefono = cliActualizarVista.getTxtTelefono().getText().trim();
+        String correo = cliActualizarVista.getTxtCorreo().getText().trim();
+        
+        if (cedula.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || direccion.isEmpty() || telefono.isEmpty() || correo.isEmpty()) {
+            cliActualizarVista.mostrarMensaje("Todos los campos son obligatorios");
+            return;
+        } else if (!cedula.matches("\\d+") || cedula.length() != 10) {
+            cliActualizarVista.mostrarMensaje("Número de cedula no valido");
+            return;
+        } else if (!telefono.matches("\\d+") || telefono.length() != 10) {
+            cliActualizarVista.mostrarMensaje("Número de telefono no valido");
+            return;
+        } else {
+            actualizo = daoCliente.actualizarCliente(new Cliente(cedula, nombre, apellido, direccion, telefono, correo));
+        }
+        
+        if (actualizo) {
+            cliActualizarVista.mostrarMensaje("Cliente Actualizado Exitosamente");
+            cliActualizarVista.limpiar();
+            cliAct = null;
+        } else {
+            cliActualizarVista.mostrarMensaje("Error al Actualizar Cliente");
         }
     }
 }

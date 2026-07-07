@@ -118,8 +118,27 @@ public class DaoClienteImp implements DaoCliente{
     }
 
     @Override
-    public boolean actualizarCliente(Cliente cliente) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+public boolean actualizarCliente(Cliente cliente) {
+        String query = "update ALQ_CLIENTES set cli_nombre = ?, cli_apellido = ?, cli_direccion = ?, "
+                     + "cli_telefono = ?, cli_correo = ? where cli_cedula = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, cliente.getCliNombre());
+            ps.setString(2, cliente.getCliApellido());
+            ps.setString(3, cliente.getCliDireccion());
+            ps.setString(4, cliente.getCliTelefono());
+            ps.setString(5, cliente.getCliCorreo());
+            ps.setString(6, cliente.getCliCedula());
+
+            ps.executeUpdate();
+            ps.close();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 
     @Override
