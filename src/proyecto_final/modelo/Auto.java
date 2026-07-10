@@ -3,20 +3,14 @@ package proyecto_final.modelo;
 public class Auto {
     private String autMatricula;
     private int autAnio;
-    private int autCapacidadPasajeros;
-    private double autPrecioDia;
-    private String autEstado;
     private Modelo autModelo;
-    private TipoAuto autTipo;
+    private String autEstado;
 
-    public Auto(String autMatricula, int autAnio, int autCapacidadPasajeros, double autPrecioDia, String autEstado, Modelo autModelo, TipoAuto autTipo) {
+    public Auto(String autMatricula, int autAnio, Modelo autModelo, String autEstado) {
         this.autMatricula = autMatricula;
         this.autAnio = autAnio;
-        this.autCapacidadPasajeros = autCapacidadPasajeros;
-        this.autPrecioDia = autPrecioDia;
-        this.autEstado = autEstado;
         this.autModelo = autModelo;
-        this.autTipo = autTipo;
+        this.autEstado = autEstado;
     }
     
     public String getAutMatricula() {
@@ -35,22 +29,6 @@ public class Auto {
         this.autAnio = autAnio;
     }
 
-    public int getAutCapacidadPasajeros() {
-        return autCapacidadPasajeros;
-    }
-
-    public void setAutCapacidadPasajeros(int autCapacidadPasajeros) {
-        this.autCapacidadPasajeros = autCapacidadPasajeros;
-    }
-
-    public double getAutPrecioDia() {
-        return autPrecioDia;
-    }
-
-    public void setAutPrecioDia(double autPrecioDia) {
-        this.autPrecioDia = autPrecioDia;
-    }
-
     public String getAutEstado() {
         return autEstado;
     }
@@ -67,22 +45,11 @@ public class Auto {
         this.autModelo = autModelo;
     }
 
-    public TipoAuto getAutTipo() {
-        return autTipo;
-    }
-
-    public void setAutTipo(TipoAuto autTipo) {
-        this.autTipo = autTipo;
-    }
-
     @Override
     public String toString() {
         return "Matricula: " + autMatricula 
                 + ", Año: " + autAnio 
-                + ", Capacidad: " + autCapacidadPasajeros + " pasajeros"
-                + ", Precio/Dia: $" + autPrecioDia 
                 + ", Estado: " + autEstado 
-                + ", Modelo: " + autModelo.getModNombre() 
-                + ", Tipo: " + autTipo.getTipNombre();
+                + ", Modelo: " + autModelo.getModNombre();
     }
 }
