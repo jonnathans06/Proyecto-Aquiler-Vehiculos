@@ -88,4 +88,27 @@ public class DaoModeloImp implements DaoModelo{
         }
         return null;
     }
+
+    @Override
+    public Integer obtenerCodigo(String busqueda) {
+        String query = "select mod_codigo from alq_modelos where mod_nombre = ?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, busqueda);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("mod_codigo");
+            }
+
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
 }

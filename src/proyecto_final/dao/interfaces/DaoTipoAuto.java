@@ -5,6 +5,6 @@ import proyecto_final.modelo.TipoAuto;
 
 public interface DaoTipoAuto {
     List<TipoAuto> listarTiposAutos();
-    int obtenerCodigo(String busqueda);
     TipoAuto buscarPorCodigo(int busqueda);
+    Integer obtenerCodigo(String busqueda);
 }

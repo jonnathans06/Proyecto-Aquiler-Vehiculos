@@ -31,30 +31,7 @@ public class DaoTipoAutoImp implements DaoTipoAuto{
         }
         
         return tipos;        
-    }
-
-    @Override
-    public int obtenerCodigo(String busqueda) {
-        String query = "select tip_codigo from alq_tipos_autos where tip_nombre = ?";
-        
-        try {
-            PreparedStatement ps = con.prepareCall(query);
-            ps.setString(1, busqueda);
-            
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return rs.getInt("tip_codigo");
-            }
-            
-            rs.close();
-            ps.close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return 0;
-    }
+    }    
 
     @Override
     public TipoAuto buscarPorCodigo(int busqueda) {
@@ -75,6 +52,29 @@ public class DaoTipoAutoImp implements DaoTipoAuto{
                 return tipoAuto;
             }
 
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+    
+    @Override
+    public Integer obtenerCodigo(String busqueda) {
+        String query = "select tip_codigo from alq_tipos_autos where tip_nombre = ?";
+        
+        try {
+            PreparedStatement ps = con.prepareCall(query);
+            ps.setString(1, busqueda);
+            
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("tip_codigo");
+            }
+            
             rs.close();
             ps.close();
         } catch (SQLException e) {

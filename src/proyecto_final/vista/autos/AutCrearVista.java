@@ -15,13 +15,14 @@ public class AutCrearVista extends javax.swing.JInternalFrame {
         setSize(1280, 730);
         setTitle("Registrar Auto");
         setVisible(true);
+        cargarColores();
         cbxMarca.removeAllItems();
         cbxModelo.removeAllItems();
     }
     
     public void limpiar(){
         txtMatricula.setText("");
-        txtPrecioDia.setText("");
+        txtKilometraje.setText("");
         txtAnio.setText("");
     }
     
@@ -53,6 +54,10 @@ public class AutCrearVista extends javax.swing.JInternalFrame {
         return cbxMarca;
     }
 
+    public JComboBox<String> getCbxColor() {
+        return cbxColor;
+    }
+    
     public JTextField getTxtMatricula() {
         return txtMatricula;
     }
@@ -61,12 +66,21 @@ public class AutCrearVista extends javax.swing.JInternalFrame {
         return txtCapacidad;
     }
     
-    public JTextField getTxtPrecioDia() {
-        return txtPrecioDia;
+    public JTextField getTxtKilometraje() {
+        return txtKilometraje;
     }
 
     public JTextField getTxtTipo() {
         return txtTipo;
+    }
+    
+    public void cargarColores() {
+        cbxColor.removeAllItems();
+        cbxColor.addItem("Blanco");
+        cbxColor.addItem("Rojo");
+        cbxColor.addItem("Negro");
+        cbxColor.addItem("Azul");
+        cbxColor.addItem("Gris");
     }
     
     public void cargarMarca(List<Marca> marcas){
@@ -106,13 +120,15 @@ public class AutCrearVista extends javax.swing.JInternalFrame {
         txtMatricula = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         lblDireccion = new javax.swing.JLabel();
-        txtPrecioDia = new javax.swing.JTextField();
+        txtKilometraje = new javax.swing.JTextField();
         cbxMarca = new javax.swing.JComboBox<>();
         lblApellido1 = new javax.swing.JLabel();
         cbxModelo = new javax.swing.JComboBox<>();
         txtAnio = new javax.swing.JTextField();
         txtTipo = new javax.swing.JTextField();
         txtCapacidad = new javax.swing.JTextField();
+        lblDireccion1 = new javax.swing.JLabel();
+        cbxColor = new javax.swing.JComboBox<>();
 
         jPasswordField1.setText("jPasswordField1");
 
@@ -238,11 +254,11 @@ public class AutCrearVista extends javax.swing.JInternalFrame {
 
         lblDireccion.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         lblDireccion.setForeground(new java.awt.Color(81, 89, 108));
-        lblDireccion.setText("Precio por dia:");
+        lblDireccion.setText("Kilometraje:");
 
-        txtPrecioDia.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        txtPrecioDia.setForeground(new java.awt.Color(81, 89, 108));
-        txtPrecioDia.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
+        txtKilometraje.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        txtKilometraje.setForeground(new java.awt.Color(81, 89, 108));
+        txtKilometraje.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
 
         cbxMarca.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         cbxMarca.setForeground(new java.awt.Color(81, 89, 108));
@@ -271,6 +287,14 @@ public class AutCrearVista extends javax.swing.JInternalFrame {
         txtCapacidad.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         txtCapacidad.setForeground(new java.awt.Color(81, 89, 108));
         txtCapacidad.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
+
+        lblDireccion1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        lblDireccion1.setForeground(new java.awt.Color(81, 89, 108));
+        lblDireccion1.setText("Color:");
+
+        cbxColor.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        cbxColor.setForeground(new java.awt.Color(81, 89, 108));
+        cbxColor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout panelDatosLayout = new javax.swing.GroupLayout(panelDatos);
         panelDatos.setLayout(panelDatosLayout);
@@ -301,8 +325,12 @@ public class AutCrearVista extends javax.swing.JInternalFrame {
                                 .addComponent(lblApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
+                        .addGap(137, 137, 137)
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelDatosLayout.createSequentialGroup()
+                                .addComponent(lblDireccion1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cbxColor, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelDatosLayout.createSequentialGroup()
                                 .addComponent(lblCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -314,7 +342,7 @@ public class AutCrearVista extends javax.swing.JInternalFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDatosLayout.createSequentialGroup()
                                 .addComponent(lblDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtPrecioDia, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtKilometraje, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(195, 195, 195)))
                 .addContainerGap())
         );
@@ -336,13 +364,15 @@ public class AutCrearVista extends javax.swing.JInternalFrame {
                 .addGap(30, 30, 30)
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPrecioDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtKilometraje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblApellido1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDireccion1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -410,6 +440,7 @@ public class AutCrearVista extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnRegistrar;
+    private javax.swing.JComboBox<String> cbxColor;
     private javax.swing.JComboBox<String> cbxMarca;
     private javax.swing.JComboBox<String> cbxModelo;
     private javax.swing.JLabel jLabel1;
@@ -421,6 +452,7 @@ public class AutCrearVista extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblCedula;
     private javax.swing.JLabel lblCorreo;
     private javax.swing.JLabel lblDireccion;
+    private javax.swing.JLabel lblDireccion1;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblTelefono;
     private javax.swing.JPanel panelCentral;
@@ -430,8 +462,8 @@ public class AutCrearVista extends javax.swing.JInternalFrame {
     private javax.swing.JPanel panelTitulo;
     private javax.swing.JTextField txtAnio;
     private javax.swing.JTextField txtCapacidad;
+    private javax.swing.JTextField txtKilometraje;
     private javax.swing.JTextField txtMatricula;
-    private javax.swing.JTextField txtPrecioDia;
     private javax.swing.JTextField txtTipo;
     // End of variables declaration//GEN-END:variables
 

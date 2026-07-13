@@ -34,8 +34,8 @@ public class DaoMarcaImp implements DaoMarca{
     }
 
     @Override
-    public int obtenerCodigo(String busqueda) {
-        String query = "select mar_codigo from alq_marcas where mar_codigo = ?";
+    public Integer obtenerCodigo(String busqueda) {
+        String query = "select mar_codigo from alq_marcas where mar_nombre = ?";
         
         try {
             PreparedStatement ps = con.prepareCall(query);
@@ -50,6 +50,6 @@ public class DaoMarcaImp implements DaoMarca{
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return 0;
+        return null;
     }
 }
