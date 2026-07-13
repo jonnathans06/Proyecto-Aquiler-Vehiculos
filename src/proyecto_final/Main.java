@@ -1,13 +1,22 @@
 package proyecto_final;
 
+import proyecto_final.controlador.AutoControlador;
 import proyecto_final.controlador.ClienteControlador;
 import proyecto_final.controlador.EmpleadoControlador;
 import proyecto_final.controlador.LoginControlador;
+import proyecto_final.dao.DaoAutoImp;
 import proyecto_final.dao.DaoClienteImp;
 import proyecto_final.dao.DaoEmpleadoImp;
+import proyecto_final.dao.DaoMarcaImp;
+import proyecto_final.dao.DaoModeloImp;
+import proyecto_final.dao.DaoTipoAutoImp;
 import proyecto_final.dao.DaoUsuarioImp;
+import proyecto_final.dao.interfaces.DaoAuto;
 import proyecto_final.dao.interfaces.DaoCliente;
 import proyecto_final.dao.interfaces.DaoEmpleado;
+import proyecto_final.dao.interfaces.DaoMarca;
+import proyecto_final.dao.interfaces.DaoModelo;
+import proyecto_final.dao.interfaces.DaoTipoAuto;
 import proyecto_final.dao.interfaces.DaoUsuario;
 import proyecto_final.vista.SistemaVista;
 import proyecto_final.vista.autos.AutActualizarVista;
@@ -73,11 +82,16 @@ public class Main {
         DaoEmpleado daoEmpleado = new DaoEmpleadoImp();
         DaoUsuario daoUsuario = new DaoUsuarioImp();
         DaoCliente daoCliente = new DaoClienteImp();
+        DaoTipoAuto daoTipoAuto = new DaoTipoAutoImp();
+        DaoMarca daoMarca = new DaoMarcaImp();
+        DaoModelo daoModelo = new DaoModeloImp();
+        DaoAuto daoAuto = new DaoAutoImp();
         
         //Controladores
         LoginControlador loginControlador = new LoginControlador(daoUsuario, loginVista, principalVista);
         EmpleadoControlador empControlador = new EmpleadoControlador(empCrearVista, empListarVista, empActVista, empEliVista, daoEmpleado, daoUsuario);
         ClienteControlador cliControlador = new ClienteControlador(cliCrearVista, cliListarVista, cliActualizarVista, cliEliminarVista, daoCliente);
+        AutoControlador autoControlador = new AutoControlador(autCrearVista, autListarVista, autActualizarVista, autEliminarVista, daoTipoAuto, daoMarca, daoModelo, daoAuto);
     }
     
 }

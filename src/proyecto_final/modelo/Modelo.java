@@ -3,42 +3,47 @@ package proyecto_final.modelo;
 public class Modelo {
     private int modCodigo;
     private String modNombre;
-    private Marca modMarca;
+    private int modMarca;
+    private int tipAuto;
+    private int modCapacidad;
+    private double modPrecioDia;
+    private String Estado;
 
-    // Constructor completo adaptado a la tabla ALQ_MODELOS
-    public Modelo(int modCodigo, String modNombre, Marca modMarca) {
+    public Modelo(int modCodigo, String modNombre, int modMarca, int tipAuto, int modCapacidad, double modPrecioDia, String Estado) {
         this.modCodigo = modCodigo;
         this.modNombre = modNombre;
         this.modMarca = modMarca;
+        this.tipAuto = tipAuto;
+        this.modCapacidad = modCapacidad;
+        this.modPrecioDia = modPrecioDia;
+        this.Estado = Estado;
     }
 
-    // Getters y Setters
     public int getModCodigo() {
         return modCodigo;
-    }
-
-    public void setModCodigo(int modCodigo) {
-        this.modCodigo = modCodigo;
     }
 
     public String getModNombre() {
         return modNombre;
     }
 
-    public void setModNombre(String modNombre) {
-        this.modNombre = modNombre;
-    }
-
-    public Marca getModMarca() {
+    public int getModMarca() {
         return modMarca;
     }
 
-    public void setModMarca(Marca modMarca) {
-        this.modMarca = modMarca;
+    public int getTipAuto() {
+        return tipAuto;
     }
 
-    @Override
-    public String toString() {
-        return "Codigo: " + modCodigo + ", Modelo: " + modNombre + ", Marca: " + modMarca.getMarNombre();
+    public int getModCapacidad() {
+        return modCapacidad;
+    }
+
+    public double getModPrecioDia() {
+        return modPrecioDia;
+    }
+
+    public String getEstado() {
+        return Estado;
     }
 }
