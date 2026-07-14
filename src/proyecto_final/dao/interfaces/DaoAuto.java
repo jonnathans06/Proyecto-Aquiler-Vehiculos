@@ -9,5 +9,5 @@ public interface DaoAuto {
     AutoDTO buscarAutoPorPlaca(String busqueda);
     List<AutoDTO> listarTodos();
     boolean actualizarAuto(Auto auto);
-    boolean eliminarAuto();
+    boolean eliminarAuto(Auto auto);
 }

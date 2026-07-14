@@ -139,7 +139,22 @@ public class DaoAutoImp implements DaoAuto{
     }
 
     @Override
-    public boolean eliminarAuto() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean eliminarAuto(Auto auto) {
+        String query = "update alq_autos set aut_estado = 'DESACTIVADO' "
+                     + "where aut_matricula = ?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, auto.getAutMatricula());
+
+            ps.executeUpdate();
+            ps.close();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
     }    
 }

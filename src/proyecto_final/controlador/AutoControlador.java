@@ -65,6 +65,16 @@ public class AutoControlador {
         autoActualizarVista.getBtnRegistrar().addActionListener((e) -> {
             actualizarAuto();
         });
+        
+        //Buscar Auto Eliminar
+        autoEliminarVista.getBtnBuscar().addActionListener((e) -> {
+            buscarAutoEliminar();
+        });
+        
+        //Eliminar Auto
+        autoEliminarVista.getBtnRegistrar().addActionListener((e) -> {
+            eliminarAuto();
+        });
     }
     
     //Cargar datos AutCrearVista
@@ -187,6 +197,25 @@ public class AutoControlador {
         }
     }
     
+    // Buscar Auto Eliminar
+    private void buscarAutoEliminar(){
+        autoDTO = null;
+        if (autoEliminarVista.getTxtBusqueda().getText().toUpperCase().trim().isEmpty()) {
+            autoEliminarVista.mostrarMensaje("Debe colocar una placa para buscar");
+            return;
+        }
+        
+        if (autoDTO == null) {
+            autoDTO = daoAuto.buscarAutoPorPlaca(autoEliminarVista.getTxtBusqueda().getText().toUpperCase().trim());
+        }
+        
+        if (autoDTO != null) {
+            autoEliminarVista.mostrarDatosAuto(autoDTO);
+        } else {
+            autoEliminarVista.mostrarMensaje("Error al encontrar el auto");
+        }
+    }
+    
     //Actualizar Auto
     private void actualizarAuto(){
         boolean actualizo = false;
@@ -211,6 +240,25 @@ public class AutoControlador {
             autoDTO = null;
         } else {
             autoActualizarVista.mostrarMensaje("Error al Actualizar el Auto");
+        }
+    }
+    
+    //Eliminar Auto
+    private void eliminarAuto() {
+        String matricula = autoEliminarVista.getTxtMatricula().getText().trim();
+        String color = autoEliminarVista.getTxtColor().getText().trim();
+        int kilometraje = Integer.valueOf(autoEliminarVista.getTxtKilometraje().getText().trim());
+        int anio = Integer.valueOf(autoEliminarVista.getTxtAnio().getText().trim());
+        int modelo = daoModelo.obtenerCodigo(autoEliminarVista.getTxtModelo().getText().trim());
+        String estado = autoEliminarVista.getTxtEstado().getText().trim();
+
+        boolean eliminado = daoAuto.eliminarAuto(new Auto(matricula, color, kilometraje, anio, modelo, estado));
+
+        if (eliminado) {
+            autoEliminarVista.mostrarMensaje("Auto Desactivado Exitosamente");
+            autoEliminarVista.limpiar();
+        } else {
+            autoEliminarVista.mostrarMensaje("Error al Desactivar Auto");
         }
     }
 }
