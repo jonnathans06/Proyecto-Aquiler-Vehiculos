@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import proyecto_final.modelo.Cliente;
+import proyecto_final.dto.AutoDTO;
 
 public class AutListarVista extends javax.swing.JInternalFrame {
 
@@ -21,35 +21,42 @@ public class AutListarVista extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(rootPane, m);
     }
     
-    public void mostrarDatosCliente(List<Cliente> clientes) {
+    public void mostrarDatosAuto(List<AutoDTO> autos) {
         DefaultTableModel modelo = (DefaultTableModel) tblDatos.getModel();
         modelo.setNumRows(0);
-
-        for(Cliente c : clientes){
+        for(AutoDTO auto : autos){
             Object[] fila = {
-                c.getCliCedula(),
-                c.getCliNombre(),
-                c.getCliApellido(),
-                c.getCliTelefono(),
-                c.getCliDireccion(),
-                c.getCliCorreo()
+                auto.getMatricula(),
+                auto.getMarca(),
+                auto.getModelo(),
+                auto.getTipo(),
+                auto.getAnio(),
+                auto.getCapacidad(),
+                auto.getPrecioDia(),
+                auto.getColor(),
+                auto.getKilometraje(),
+                auto.getEstado()
             };
             modelo.addRow(fila);
         }
         tblDatos.setModel(modelo);
     }
-
-    public void mostrarDatosCliente(Cliente c) {
+    
+    public void mostrarDatosAuto(AutoDTO auto) {
         DefaultTableModel modelo = (DefaultTableModel) tblDatos.getModel();
         modelo.setNumRows(0);
         Object[] fila = {
-            c.getCliCedula(),
-            c.getCliNombre(),
-            c.getCliApellido(),
-            c.getCliTelefono(),
-            c.getCliDireccion(),
-            c.getCliCorreo()
-        };
+                auto.getMatricula(),
+                auto.getMarca(),
+                auto.getModelo(),
+                auto.getTipo(),
+                auto.getAnio(),
+                auto.getCapacidad(),
+                auto.getPrecioDia(),
+                auto.getColor(),
+                auto.getKilometraje(),
+                auto.getEstado()
+            };
         modelo.addRow(fila);
         tblDatos.setModel(modelo);
     }
@@ -185,11 +192,11 @@ public class AutListarVista extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Matricula", "Marca", "Modelo", "Tipo", "Año", "Capacidad", "Precio por dia"
+                "Matricula", "Marca", "Modelo", "Tipo", "Año", "Capacidad", "Precio por dia", "Color", "Kilometraje", "Estado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

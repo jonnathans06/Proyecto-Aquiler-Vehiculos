@@ -1,12 +1,11 @@
 package proyecto_final.controlador;
 
-import java.util.List;
 import proyecto_final.dao.interfaces.DaoAuto;
 import proyecto_final.dao.interfaces.DaoMarca;
 import proyecto_final.dao.interfaces.DaoModelo;
 import proyecto_final.dao.interfaces.DaoTipoAuto;
+import proyecto_final.dto.AutoDTO;
 import proyecto_final.modelo.Auto;
-import proyecto_final.modelo.Marca;
 import proyecto_final.modelo.Modelo;
 import proyecto_final.modelo.TipoAuto;
 import proyecto_final.vista.autos.AutActualizarVista;
@@ -23,6 +22,7 @@ public class AutoControlador {
     private DaoMarca daoMarca;
     private DaoModelo daoModelo ;
     private DaoAuto daoAuto;
+    private AutoDTO autoDTO;
 
     public AutoControlador(AutCrearVista autoCrearVista, AutListarVista autoListarVista, AutActualizarVista autoActualizarVista, AutEliminarVista autoEliminarVista, DaoTipoAuto daoTipo,
                            DaoMarca daoMarca, DaoModelo daoModelo, DaoAuto daoAuto) {
@@ -43,6 +43,27 @@ public class AutoControlador {
         //Crear auto
         autoCrearVista.getBtnRegistrar().addActionListener((e) -> {
             crearAuto();
+        });
+        
+        //Listar Todos
+        autoListarVista.getBtnListar().addActionListener((e) -> {
+            listarTodos();
+        });
+        
+        //Buscar Listar
+        autoListarVista.getBtnBuscar().addActionListener((e) -> {
+            buscarAutoListar();
+            autoDTO = null;
+        });
+        
+        //Buscar Auto Actualizar
+        autoActualizarVista.getBtnBuscar().addActionListener((e) -> {
+            buscarAutoActualizar();
+        });
+        
+        //Actualizar Auto
+        autoActualizarVista.getBtnRegistrar().addActionListener((e) -> {
+            actualizarAuto();
         });
     }
     
@@ -94,7 +115,7 @@ public class AutoControlador {
         });
     }
     
-    //Autos
+    //Crear Autos
     private void crearAuto(){
         boolean inserto = false;
         
@@ -121,5 +142,75 @@ public class AutoControlador {
         } else {
             autoCrearVista.mostrarMensaje("Error al ingresar el auto");
         }   
+    }
+    
+    //Listar todos
+    private void listarTodos() {
+        autoListarVista.mostrarDatosAuto(daoAuto.listarTodos());
+    }
+    
+    //Buscar Auto Listar
+    private void buscarAutoListar() {
+        autoDTO = null;
+        if (autoListarVista.getTxtBusqueda().getText().isEmpty()) {
+            autoListarVista.mostrarMensajes("Debe colocar una placa para buscar");
+            return;
+        }
+        
+        if (autoDTO == null) {
+            autoDTO = daoAuto.buscarAutoPorPlaca(autoListarVista.getTxtBusqueda().getText().toUpperCase().trim());
+        }
+        
+        if (autoDTO != null) {
+            autoListarVista.mostrarDatosAuto(autoDTO);
+        } else {
+            autoListarVista.mostrarMensajes("Error al encontrar el auto");
+        }
+    }
+    
+    //Buscar Auto Actualizar
+    private void buscarAutoActualizar(){
+        autoDTO = null;
+        if (autoActualizarVista.getTxtBusqueda().getText().toUpperCase().trim().isEmpty()) {
+            autoActualizarVista.mostrarMensaje("Debe colocar una placa para buscar");
+            return;
+        }
+        
+        if (autoDTO == null) {
+            autoDTO = daoAuto.buscarAutoPorPlaca(autoActualizarVista.getTxtBusqueda().getText().toUpperCase().trim());
+        }
+        
+        if (autoDTO != null) {
+            autoActualizarVista.cargarDatosAuto(autoDTO);
+        } else {
+            autoListarVista.mostrarMensajes("Error al encontrar el auto");
+        }
+    }
+    
+    //Actualizar Auto
+    private void actualizarAuto(){
+        boolean actualizo = false;
+        
+        String matricula = autoActualizarVista.getTxtMatricula().getText().trim();
+        String color = autoActualizarVista.getCbxColor().getSelectedItem().toString();
+        int kilometraje = Integer.valueOf(autoActualizarVista.getTxtKilometraje().getText().trim());
+        int anio = Integer.valueOf(autoActualizarVista.getTxtAnio().getText().trim());
+        int modelo = daoModelo.obtenerCodigo(autoActualizarVista.getTxtModelo().getText().trim());
+        String estado = autoActualizarVista.getCbxEstado().getSelectedItem().toString();
+        
+        if (color.equals(autoDTO.getColor()) && anio == autoDTO.getAnio() && kilometraje == autoDTO.getKilometraje() && estado.equals(autoDTO.getEstado())) {
+            autoActualizarVista.mostrarMensaje("Debe hacer cambios para actualizar");
+            return;
+        }
+        
+        actualizo = daoAuto.actualizarAuto(new Auto(matricula, color, kilometraje, anio, modelo, estado));
+        
+        if (actualizo) {
+            autoActualizarVista.mostrarMensaje("Se Actualizó Correctamente el Auto");
+            autoActualizarVista.limpiar();
+            autoDTO = null;
+        } else {
+            autoActualizarVista.mostrarMensaje("Error al Actualizar el Auto");
+        }
     }
 }

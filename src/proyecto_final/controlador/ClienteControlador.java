@@ -65,7 +65,7 @@ public class ClienteControlador {
 
         //Eliminar Empleado
         cliEliminarVista.getBtnConfirmar().addActionListener((e) -> {
-            eliminarEmpleado();
+            eliminarCliente();
         });
     }
     
@@ -168,7 +168,7 @@ public class ClienteControlador {
         }
     }
     
-    private void eliminarEmpleado() {
+    private void eliminarCliente() {
         boolean elimino = daoCliente.eliminarCliente(cliAct);
         
         if (elimino) {
