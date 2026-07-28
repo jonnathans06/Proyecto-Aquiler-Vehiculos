@@ -4,6 +4,7 @@ import proyecto_final.controlador.AutoControlador;
 import proyecto_final.controlador.ClienteControlador;
 import proyecto_final.controlador.EmpleadoControlador;
 import proyecto_final.controlador.LoginControlador;
+import proyecto_final.controlador.ReservaControlador;
 import proyecto_final.dao.DaoAutoImp;
 import proyecto_final.dao.DaoClienteImp;
 import proyecto_final.dao.DaoEmpleadoImp;
@@ -92,6 +93,7 @@ public class Main {
         EmpleadoControlador empControlador = new EmpleadoControlador(empCrearVista, empListarVista, empActVista, empEliVista, daoEmpleado, daoUsuario);
         ClienteControlador cliControlador = new ClienteControlador(cliCrearVista, cliListarVista, cliActualizarVista, cliEliminarVista, daoCliente);
         AutoControlador autoControlador = new AutoControlador(autCrearVista, autListarVista, autActualizarVista, autEliminarVista, daoTipoAuto, daoMarca, daoModelo, daoAuto);
+        ReservaControlador reservaControlador = new ReservaControlador(principalVista, cliCrearVista, resCrearVista, daoCliente);
     }
     
 }

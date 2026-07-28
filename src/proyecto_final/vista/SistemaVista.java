@@ -1,5 +1,7 @@
 package proyecto_final.vista;
 
+import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
 import javax.swing.JMenuItem;
 import proyecto_final.vista.autos.AutActualizarVista;
 import proyecto_final.vista.autos.AutCrearVista;
@@ -215,9 +217,21 @@ public class SistemaVista extends javax.swing.JFrame {
             conListarVista.setVisible(true);
         });
     }
+    
+    public static void addComponente(JDesktopPane desktopPane, JInternalFrame jFrame){
+        desktopPane.add(jFrame);
+        jFrame.toFront();
+        jFrame.setVisible(true);
+        jFrame.setClosable(false);
+        jFrame.setMaximizable(false);
+    }
 
     public JMenuItem getCerrarSesionMenuItem() {
         return cerrarSesionMenuItem;
+    }
+
+    public JDesktopPane getDesktopPane() {
+        return desktopPane;
     }
     
     @SuppressWarnings("unchecked")

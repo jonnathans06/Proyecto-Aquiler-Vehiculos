@@ -1,6 +1,9 @@
 package proyecto_final.vista.reservas;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import proyecto_final.modelo.Cliente;
 
 public class ResCrearVista extends javax.swing.JInternalFrame {
 
@@ -13,6 +16,31 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
     
     public void mostrarMensajes(String m){
         JOptionPane.showMessageDialog(rootPane, m);
+    }
+
+    public JButton getBtnAgrCliente() {
+        return btnAgrCliente;
+    }
+
+    public JButton getBtnBscCliente() {
+        return btnBscCliente;
+    }
+
+    public JTextField getTxtApeCliente() {
+        return txtApeCliente;
+    }
+
+    public JTextField getTxtBusqCliente() {
+        return txtBusqCliente;
+    }
+
+    public JTextField getTxtNomCliente() {
+        return txtNomCliente;
+    }
+
+    public void cargarDatosCliente(Cliente c){
+        txtNomCliente.setText(c.getCliNombre());
+        txtApeCliente.setText(c.getCliApellido());
     }
     
     @SuppressWarnings("unchecked")
@@ -28,13 +56,13 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txtApeCliente = new javax.swing.JTextField();
+        txtNomCliente = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        txtBusqCliente = new javax.swing.JTextField();
+        btnBscCliente = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
-        jButton6 = new javax.swing.JButton();
+        btnAgrCliente = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
@@ -122,43 +150,41 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
         jLabel5.setForeground(new java.awt.Color(81, 89, 108));
         jLabel5.setText("Apellido:");
 
-        jTextField4.setEditable(false);
-        jTextField4.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField4.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jTextField4.setForeground(new java.awt.Color(81, 89, 108));
-        jTextField4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
-        jTextField4.setEnabled(false);
+        txtApeCliente.setEditable(false);
+        txtApeCliente.setBackground(new java.awt.Color(255, 255, 255));
+        txtApeCliente.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        txtApeCliente.setForeground(new java.awt.Color(81, 89, 108));
+        txtApeCliente.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
 
-        jTextField2.setEditable(false);
-        jTextField2.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(81, 89, 108));
-        jTextField2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
-        jTextField2.setEnabled(false);
+        txtNomCliente.setEditable(false);
+        txtNomCliente.setBackground(new java.awt.Color(255, 255, 255));
+        txtNomCliente.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        txtNomCliente.setForeground(new java.awt.Color(81, 89, 108));
+        txtNomCliente.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
 
         jLabel9.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(81, 89, 108));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel9.setText("Buscar Cliente");
 
-        jTextField7.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jTextField7.setForeground(new java.awt.Color(81, 89, 108));
-        jTextField7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
-        jTextField7.addActionListener(this::jTextField7ActionPerformed);
+        txtBusqCliente.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        txtBusqCliente.setForeground(new java.awt.Color(81, 89, 108));
+        txtBusqCliente.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
+        txtBusqCliente.addActionListener(this::txtBusqClienteActionPerformed);
 
-        jButton1.setBackground(new java.awt.Color(204, 204, 204));
-        jButton1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(81, 89, 108));
-        jButton1.setText("Buscar");
-        jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
+        btnBscCliente.setBackground(new java.awt.Color(204, 204, 204));
+        btnBscCliente.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        btnBscCliente.setForeground(new java.awt.Color(81, 89, 108));
+        btnBscCliente.setText("Buscar");
+        btnBscCliente.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
 
         jSeparator2.setForeground(new java.awt.Color(81, 89, 108));
 
-        jButton6.setBackground(new java.awt.Color(81, 89, 108));
-        jButton6.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Agregar");
-        jButton6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
+        btnAgrCliente.setBackground(new java.awt.Color(81, 89, 108));
+        btnAgrCliente.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        btnAgrCliente.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgrCliente.setText("Agregar");
+        btnAgrCliente.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -171,19 +197,19 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtBusqCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBscCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnAgrCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtNomCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField4))
+                        .addComponent(txtApeCliente))
                     .addComponent(jSeparator2))
                 .addContainerGap())
         );
@@ -193,17 +219,17 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton6))
+                    .addComponent(txtBusqCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBscCliente)
+                    .addComponent(btnAgrCliente))
                 .addGap(10, 10, 10)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNomCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtApeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -285,18 +311,18 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3)
-                .addGap(15, 15, 15))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+                .addContainerGap(32, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -329,7 +355,6 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
         jTextField1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(81, 89, 108));
         jTextField1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
-        jTextField1.setEnabled(false);
 
         jLabel3.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(81, 89, 108));
@@ -340,7 +365,6 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
         jTextField3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jTextField3.setForeground(new java.awt.Color(81, 89, 108));
         jTextField3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
-        jTextField3.setEnabled(false);
 
         jLabel6.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(81, 89, 108));
@@ -351,7 +375,6 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
         jTextField5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jTextField5.setForeground(new java.awt.Color(81, 89, 108));
         jTextField5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
-        jTextField5.setEnabled(false);
 
         jLabel7.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(81, 89, 108));
@@ -362,7 +385,6 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
         jTextField6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jTextField6.setForeground(new java.awt.Color(81, 89, 108));
         jTextField6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
-        jTextField6.setEnabled(false);
 
         jLabel8.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(81, 89, 108));
@@ -373,7 +395,6 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
         jTextField8.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jTextField8.setForeground(new java.awt.Color(81, 89, 108));
         jTextField8.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
-        jTextField8.setEnabled(false);
 
         jLabel10.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(81, 89, 108));
@@ -384,7 +405,6 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
         jTextField9.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jTextField9.setForeground(new java.awt.Color(81, 89, 108));
         jTextField9.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
-        jTextField9.setEnabled(false);
 
         jLabel11.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(81, 89, 108));
@@ -395,7 +415,6 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
         jTextField10.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jTextField10.setForeground(new java.awt.Color(81, 89, 108));
         jTextField10.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
-        jTextField10.setEnabled(false);
 
         jLabel13.setFont(new java.awt.Font("SansSerif", 0, 10)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(81, 89, 108));
@@ -542,7 +561,7 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41))
         );
         jPanel2Layout.setVerticalGroup(
@@ -649,21 +668,21 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+    private void txtBusqClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBusqClienteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
+    }//GEN-LAST:event_txtBusqClienteActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnAgrCliente;
+    private javax.swing.JButton btnBscCliente;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
@@ -699,16 +718,16 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     private javax.swing.JPanel panelInferior;
     private javax.swing.JPanel panelPrincipal;
     private javax.swing.JPanel panelSuperior;
+    private javax.swing.JTextField txtApeCliente;
+    private javax.swing.JTextField txtBusqCliente;
+    private javax.swing.JTextField txtNomCliente;
     // End of variables declaration//GEN-END:variables
 }
