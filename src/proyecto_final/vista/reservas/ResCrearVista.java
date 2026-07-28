@@ -1,8 +1,14 @@
 package proyecto_final.vista.reservas;
 
+import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import proyecto_final.dao.DaoDatosTablas;
+import proyecto_final.dto.AutoDTO;
 import proyecto_final.modelo.Cliente;
 
 public class ResCrearVista extends javax.swing.JInternalFrame {
@@ -12,6 +18,7 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
         setSize(1280, 730);
         setTitle("Crear Reserva");
         setVisible(true);
+        cargarMarcaTipo();
     }
     
     public void mostrarMensajes(String m){
@@ -38,9 +45,56 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
         return txtNomCliente;
     }
 
+    public JComboBox<String> getCbxMarcas() {
+        return cbxMarcas;
+    }
+
+    public JComboBox<String> getCbxTipo() {
+        return cbxTipo;
+    }
+
+    public JTable getTblDatos() {
+        return tblDatos;
+    }
+    
     public void cargarDatosCliente(Cliente c){
         txtNomCliente.setText(c.getCliNombre());
         txtApeCliente.setText(c.getCliApellido());
+    }
+    
+    public void cargarMarcaTipo(){
+        cbxMarcas.removeAllItems();
+        cbxTipo.removeAllItems();
+        
+        List<String> marcas = DaoDatosTablas.obtenerDatos("marcas", "mar_nombre");
+        List<String> tipos = DaoDatosTablas.obtenerDatos("tipos_autos", "tip_nombre");
+        
+        for(String m : marcas){
+            cbxMarcas.addItem(m);
+        }
+        
+        for(String t : tipos){
+            cbxTipo.addItem(t);
+        }
+    }
+    
+    public void mostrarDatosAuto(List<AutoDTO> autos) {
+        DefaultTableModel modelo = (DefaultTableModel) tblDatos.getModel();
+        modelo.setNumRows(0);
+        
+        if (!autos.isEmpty()) {
+            for(AutoDTO auto : autos){
+                Object[] fila = {
+                    auto.getMarca(),
+                    auto.getModelo(),
+                    auto.getAnio(),
+                    auto.getCapacidad(),
+                    auto.getPrecioDia(),
+                };
+                modelo.addRow(fila);
+            }
+        }
+        tblDatos.setModel(modelo);
     }
     
     @SuppressWarnings("unchecked")
@@ -65,12 +119,11 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
         btnAgrCliente = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbxTipo = new javax.swing.JComboBox<>();
+        cbxMarcas = new javax.swing.JComboBox<>();
         jLabel16 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblDatos = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
@@ -240,22 +293,19 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
         jLabel12.setForeground(new java.awt.Color(81, 89, 108));
         jLabel12.setText("Marca:");
 
-        jComboBox2.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxTipo.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        cbxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jComboBox1.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxMarcas.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        cbxMarcas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel16.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(81, 89, 108));
         jLabel16.setText("Tipo:");
 
-        jButton3.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        jButton3.setText("Buscar");
-
-        jTable1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jTable1.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblDatos.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        tblDatos.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        tblDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -274,7 +324,7 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblDatos);
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -306,24 +356,20 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(13, 13, 13)
+                .addGap(61, 61, 61)
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbxMarcas, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addComponent(cbxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
+                .addContainerGap()
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -331,11 +377,10 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
                 .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxMarcas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(cbxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -679,12 +724,11 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgrCliente;
     private javax.swing.JButton btnBscCliente;
+    private javax.swing.JComboBox<String> cbxMarcas;
+    private javax.swing.JComboBox<String> cbxTipo;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -713,7 +757,6 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
@@ -726,6 +769,7 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
     private javax.swing.JPanel panelInferior;
     private javax.swing.JPanel panelPrincipal;
     private javax.swing.JPanel panelSuperior;
+    private javax.swing.JTable tblDatos;
     private javax.swing.JTextField txtApeCliente;
     private javax.swing.JTextField txtBusqCliente;
     private javax.swing.JTextField txtNomCliente;

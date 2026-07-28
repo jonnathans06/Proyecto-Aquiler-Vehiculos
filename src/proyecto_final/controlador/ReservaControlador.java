@@ -1,5 +1,6 @@
 package proyecto_final.controlador;
 
+import proyecto_final.dao.interfaces.DaoAuto;
 import proyecto_final.dao.interfaces.DaoCliente;
 import proyecto_final.modelo.Cliente;
 import proyecto_final.vista.SistemaVista;
@@ -11,12 +12,14 @@ public class ReservaControlador {
     private CliCrearVista cliCrearVista;
     private ResCrearVista resCrearVista;
     private DaoCliente daoCliente;
+    private DaoAuto daoAuto;
 
-    public ReservaControlador(SistemaVista sistemaVista, CliCrearVista cliCrearVista, ResCrearVista resCrearVista, DaoCliente daoCliente) {
+    public ReservaControlador(SistemaVista sistemaVista, CliCrearVista cliCrearVista, ResCrearVista resCrearVista, DaoCliente daoCliente, DaoAuto daoAuto) {
         this.sistemaVista = sistemaVista;
         this.cliCrearVista = cliCrearVista;
         this.resCrearVista = resCrearVista;
         this.daoCliente = daoCliente;
+        this.daoAuto = daoAuto;
         accionesBotones();
     }
     
@@ -33,6 +36,9 @@ public class ReservaControlador {
             agregarCliente();
         });
         
+        // Buscar Auto
+        cargarDatosAutoCrearReserva();
+        
     }
     
     private void buscarClienteCrearReserva(){
@@ -47,6 +53,15 @@ public class ReservaControlador {
         } catch (NullPointerException nul) {
             System.out.println("Error");
         }
+    }
+    
+    private void cargarDatosAutoCrearReserva(){
+        resCrearVista.getCbxTipo().addActionListener((e) -> {
+            String marca = resCrearVista.getCbxMarcas().getSelectedItem().toString();
+            String modelo = resCrearVista.getCbxTipo().getSelectedItem().toString();
+            
+            resCrearVista.mostrarDatosAuto(daoAuto.buscarAutoReserva(marca, modelo));
+        });
     }
     
     private void agregarCliente(){

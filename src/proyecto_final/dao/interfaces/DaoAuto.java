@@ -10,4 +10,5 @@ public interface DaoAuto {
     List<AutoDTO> listarTodos();
     boolean actualizarAuto(Auto auto);
     boolean eliminarAuto(Auto auto);
+    List<AutoDTO> buscarAutoReserva(String marca, String tipo);
 }

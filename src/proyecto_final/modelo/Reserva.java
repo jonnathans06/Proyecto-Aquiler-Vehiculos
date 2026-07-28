@@ -2,7 +2,7 @@ package proyecto_final.modelo;
 
 import java.time.LocalDate;
 
-class Reserva {
+public class Reserva {
     private int resCodigo;
     private LocalDate resFechaInicio;
     private LocalDate resFechaFin;
