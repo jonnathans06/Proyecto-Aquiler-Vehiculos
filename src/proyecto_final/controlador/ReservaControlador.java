@@ -86,6 +86,7 @@ public class ReservaControlador {
     
     private void crearReserva(){
         boolean inserto = false;
+
         Date fechaInicio = resCrearVista.getDtFechaIni().getDate();
         Date fechaFin = resCrearVista.getDtFechaFin().getDate();
         Date horaInicio = (Date) resCrearVista.getSpHoraIni().getValue();
@@ -120,18 +121,8 @@ public class ReservaControlador {
             return;
         }
 
-        LocalDate diaInicio = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate diaFin = fechaFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalTime tiempoInicio = horaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalTime().withSecond(0).withNano(0);
-        LocalTime tiempoFin = horaFin.toInstant().atZone(ZoneId.systemDefault()).toLocalTime().withSecond(0).withNano(0);
-        LocalDateTime fechaHoraInicio = LocalDateTime.of(diaInicio, tiempoInicio);
-        LocalDateTime fechaHoraFin = LocalDateTime.of(diaFin, tiempoFin);
-        LocalDate fechaActual = LocalDate.now();
-
-        if (diaInicio.isBefore(fechaActual)) {
-            resCrearVista.mostrarMensajes("La fecha de inicio no puede ser anterior a la fecha actual.");
-            return;
-        }
+        LocalDateTime fechaHoraInicio = convertirFechaHora(fechaInicio, horaInicio);
+        LocalDateTime fechaHoraFin = convertirFechaHora(fechaFin, horaFin);
 
         if (!fechaHoraFin.isAfter(fechaHoraInicio)) {
             resCrearVista.mostrarMensajes("La fecha y hora de finalización deben ser posteriores a la fecha y hora de inicio.");
@@ -154,5 +145,12 @@ public class ReservaControlador {
         } else {
             resCrearVista.mostrarMensajes("No se pudo registrar la reserva. El auto podría no estar disponible.");
         }
+    }
+    
+    private LocalDateTime convertirFechaHora(Date fecha, Date hora){
+        return LocalDateTime.of(
+                fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+                hora.toInstant().atZone(ZoneId.systemDefault()).toLocalTime().withSecond(0).withNano(0)
+        );
     }
 }
