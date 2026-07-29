@@ -1,6 +1,7 @@
 package proyecto_final.controlador;
 
 import java.sql.*;
+import javax.swing.JMenuItem;
 import proyecto_final.dao.interfaces.DaoUsuario;
 import proyecto_final.modelo.Usuario;
 import proyecto_final.vista.SistemaVista;
@@ -31,7 +32,7 @@ public class LoginControlador {
     
     private void crearAcceso(){
         try {
-            usuario = daoUsuario.buscarUsuarioPorUsername(loginVista.getTxtUsername().getText());
+            usuario = daoUsuario.buscarUsuarioLogin(loginVista.getTxtUsername().getText());
 
             if (usuario == null) {
                 loginVista.getLblErrores().setText("Usuario no encontrado");

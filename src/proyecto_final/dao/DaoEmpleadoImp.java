@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import proyecto_final.dao.interfaces.DaoEmpleado;
 import proyecto_final.modelo.Empleado;
+import proyecto_final.modelo.Usuario;
 import proyecto_final.sql.ConexionDB;
 
 public class DaoEmpleadoImp implements DaoEmpleado{   
@@ -35,17 +36,21 @@ public class DaoEmpleadoImp implements DaoEmpleado{
     }
 
     @Override
-    public Empleado buscarEmpleadoPorCedula(String username) {
-        String query = "select * from ALQ_EMPLEADOS where emp_cedula = ? and emp_estado = 'ACTIVO'";
+    public Empleado buscarEmpleadoPorCedula(String cedula) {
+        String query = "select e.*, u.usu_username, u.usu_contrasenia "
+                     + "from alq_empleados e "
+                     + "left join alq_usuarios u on e.emp_cedula = u.emp_cedula "
+                     + "where e.emp_cedula = ?";
 
         try {
             Connection conexionBD = ConexionDB.conectar();
             PreparedStatement ps = conexionBD.prepareStatement(query);
-            ps.setString(1, username);
+            ps.setString(1, cedula);
 
             ResultSet rs = ps.executeQuery();
+
             if (rs.next()) {
-                String cedula = rs.getString("emp_cedula");
+                String empCedula = rs.getString("emp_cedula");
                 String nombres = rs.getString("emp_nombre");
                 String apellidos = rs.getString("emp_apellido");
                 String direccion = rs.getString("emp_direccion");
@@ -54,16 +59,32 @@ public class DaoEmpleadoImp implements DaoEmpleado{
                 String tipoPersonal = rs.getString("emp_tipo_personal");
                 String cargo = rs.getString("emp_cargo");
 
-                Empleado empleado = new Empleado(cedula, nombres, apellidos, direccion, telefono, correo, tipoPersonal, cargo);
-                System.out.println(empleado);
+                Empleado empleado = new Empleado(empCedula, nombres, apellidos, direccion, telefono, correo, tipoPersonal, cargo);
+
+                String username = rs.getString("usu_username");
+
+                if (username != null) {
+                    String password = rs.getString("usu_contrasenia");
+
+                    Usuario usuario = new Usuario(username, password);
+                    empleado.setEmpUsuario(usuario);
+                } else {
+                    empleado.setEmpUsuario(null);
+                }
 
                 rs.close();
                 ps.close();
+
                 return empleado;
             }
+
+            rs.close();
+            ps.close();
+
         } catch (SQLException e) {
             System.out.println("Error al encontrar empleado: " + e.getMessage());
         }
+
         return null;
     }
     
@@ -138,7 +159,7 @@ public class DaoEmpleadoImp implements DaoEmpleado{
     @Override
     public List<Empleado> listarTodos() {
         List<Empleado> listaEmpleados = new ArrayList<>();
-        String query = "select * from ALQ_EMPLEADOS where emp_estado = 'ACTIVO'order by 3 asc";
+        String query = "select * from ALQ_EMPLEADOS where emp_estado = 'ACTIVO' order by 3 asc";
 
         try {
             Connection conexionBD = ConexionDB.conectar();
@@ -189,22 +210,22 @@ public class DaoEmpleadoImp implements DaoEmpleado{
             ps.close();
             return true;
         } catch (SQLException e) {
-            System.out.println("[Error al actualizar] " + e.getMessage());
+            e.printStackTrace();
         }
         return false;
     }
 
     @Override
     public boolean desactivarEmpleado(String empCedula) {
-        String queryUsu = "delete from ALQ_USUARIOS where emp_cedula = ?";
+        String queryUsu = "update ALQ_USUARIOS set usu_estado = ? where emp_cedula = ?";
         String queryEmp = "update ALQ_EMPLEADOS set emp_estado = ? where emp_cedula = ?";
 
         try {
             Connection conexionBD = ConexionDB.conectar();
-
-            // Eliminar el usuario 
+            
             PreparedStatement ps1 = conexionBD.prepareStatement(queryUsu);
-            ps1.setString(1, empCedula);
+            ps1.setString(1, "INACTIVO");
+            ps1.setString(2, empCedula);
             ps1.executeUpdate();
             ps1.close();
             

@@ -98,14 +98,16 @@ public class Empleado {
     
     @Override
     public String toString() {
-        return "Cedula: " + empCedula 
-                + ", Nombres: " + empNombre
-                + ", Apellidos: " + empApellido 
-                + ", Direccion: " + empDireccion 
-                + ", Telefono: " + empTelefono 
-                + ", Correo: " + empCorreo
-                + ", Tipo Personal: " + empTipoPersonal
-                + ", Cargo: " + empCargo
-                + ", Usuario: " + getEmpUsuario().getUsuUsername();
+        return "Empleado{" 
+                + "empCedula=" + empCedula
+                + ", empNombre=" + empNombre
+                + ", empApellido=" + empApellido
+                + ", empDireccion=" + empDireccion
+                + ", empTelefono=" + empTelefono
+                + ", empCorreo=" + empCorreo
+                + ", empTipoPersonal=" + empTipoPersonal
+                + ", empCargo=" + empCargo
+                + ", empUsuario=" + (empUsuario != null ? empUsuario.getUsuUsername() : "Sin usuario")
+                + '}';
     }
 }
