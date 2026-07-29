@@ -17,6 +17,10 @@ public class Auto {
         this.autEstado = autEstado;
     }
 
+    public Auto() {
+        
+    }
+
     public String getAutMatricula() {
         return autMatricula;
     }
@@ -39,6 +43,10 @@ public class Auto {
 
     public String getAutEstado() {
         return autEstado;
+    }
+
+    public void setAutMatricula(String autMatricula) {
+        this.autMatricula = autMatricula;
     }
     
     @Override

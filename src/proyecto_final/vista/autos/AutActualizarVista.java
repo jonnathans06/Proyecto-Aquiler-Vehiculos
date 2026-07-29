@@ -43,10 +43,11 @@ public class AutActualizarVista extends javax.swing.JInternalFrame {
 
     public void cargarEstados(){
         cbxEstado.removeAllItems();
-        cbxEstado.addItem("DISPONIBLE");
-        cbxEstado.addItem("MANTENIMIENTO");
+        cbxEstado.addItem("ACTIVO");
+        cbxEstado.addItem("INACTIVO");
+        cbxEstado.addItem("EN_MANTENIMIENTO");
         cbxEstado.addItem("ALQUILADO");
-        cbxEstado.addItem("DESACTIVADO");
+        cbxEstado.addItem("EN_CONTRATO");
     }
     
     public void cargarDatosAuto(AutoDTO auto){

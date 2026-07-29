@@ -7,7 +7,7 @@ import proyecto_final.vista.SistemaVista;
 import proyecto_final.vista.login.LoginVista;
 
 public class LoginControlador {
-    private Usuario usuario;
+    private static Usuario usuario;
     private DaoUsuario daoUsuario;
     private LoginVista loginVista;
     private SistemaVista principalVista;
@@ -39,7 +39,7 @@ public class LoginControlador {
             }
 
             if (loginVista.getTxtPassword().getText().equals(usuario.getUsuPassword())) {
-                loginVista.getLblErrores().setText("Bienvenido: " + usuario.getUsuEmpleado().getEmpNombre());
+                getUsuarioAutenticado();
                 loginVista.dispose();
                 loginVista.limpiar();
                 principalVista.setVisible(true);
@@ -58,5 +58,14 @@ public class LoginControlador {
             loginVista.setVisible(true);
             usuario = null;
         });
+    }
+    
+    public static Usuario getUsuarioAutenticado(){
+        if (usuario != null) {
+            System.out.println(usuario);
+            return usuario;
+        }
+        
+        return null;
     }
 }
