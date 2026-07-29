@@ -7,7 +7,6 @@ import proyecto_final.controlador.LoginControlador;
 import proyecto_final.controlador.ReservaControlador;
 import proyecto_final.dao.DaoAutoImp;
 import proyecto_final.dao.DaoClienteImp;
-import proyecto_final.dao.DaoDatosTablas;
 import proyecto_final.dao.DaoEmpleadoImp;
 import proyecto_final.dao.DaoMarcaImp;
 import proyecto_final.dao.DaoModeloImp;
