@@ -1,22 +1,34 @@
 package proyecto_final.modelo;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Reserva {
+
     private int resCodigo;
-    private LocalDate resFechaInicio;
-    private LocalDate resFechaFin;
+    private LocalDateTime resFechaHoraInicio;
+    private LocalDateTime resFechaHoraFin;
     private Cliente resCliente;
     private Auto resAuto;
-    private Empleado resEmpleado;
+    private String resUsuario;
+    private String resEstado;
 
-    public Reserva(int resCodigo, LocalDate resFechaInicio, LocalDate resFechaFin, Cliente resCliente, Auto resAuto, Empleado resEmpleado) {
+    public Reserva(int resCodigo, LocalDateTime resFechaHoraInicio, LocalDateTime resFechaHoraFin, Cliente resCliente, Auto resAuto, String resUsuario, String resEstado) {
         this.resCodigo = resCodigo;
-        this.resFechaInicio = resFechaInicio;
-        this.resFechaFin = resFechaFin;
+        this.resFechaHoraInicio = resFechaHoraInicio;
+        this.resFechaHoraFin = resFechaHoraFin;
         this.resCliente = resCliente;
         this.resAuto = resAuto;
-        this.resEmpleado = resEmpleado;
+        this.resUsuario = resUsuario;
+        this.resEstado = resEstado;
+    }
+
+    public Reserva(LocalDateTime resFechaHoraInicio, LocalDateTime resFechaHoraFin, Cliente resCliente, Auto resAuto, String resUsuario) {
+        this.resFechaHoraInicio = resFechaHoraInicio;
+        this.resFechaHoraFin = resFechaHoraFin;
+        this.resCliente = resCliente;
+        this.resAuto = resAuto;
+        this.resUsuario = resUsuario;
+        this.resEstado = "ACTIVA";
     }
 
     public int getResCodigo() {
@@ -27,20 +39,20 @@ public class Reserva {
         this.resCodigo = resCodigo;
     }
 
-    public LocalDate getResFechaInicio() {
-        return resFechaInicio;
+    public LocalDateTime getResFechaHoraInicio() {
+        return resFechaHoraInicio;
     }
 
-    public void setResFechaInicio(LocalDate resFechaInicio) {
-        this.resFechaInicio = resFechaInicio;
+    public void setResFechaHoraInicio(LocalDateTime resFechaHoraInicio) {
+        this.resFechaHoraInicio = resFechaHoraInicio;
     }
 
-    public LocalDate getResFechaFin() {
-        return resFechaFin;
+    public LocalDateTime getResFechaHoraFin() {
+        return resFechaHoraFin;
     }
 
-    public void setResFechaFin(LocalDate resFechaFin) {
-        this.resFechaFin = resFechaFin;
+    public void setResFechaHoraFin(LocalDateTime resFechaHoraFin) {
+        this.resFechaHoraFin = resFechaHoraFin;
     }
 
     public Cliente getResCliente() {
@@ -59,11 +71,19 @@ public class Reserva {
         this.resAuto = resAuto;
     }
 
-    public Empleado getResEmpleado() {
-        return resEmpleado;
+    public String getResUsuario() {
+        return resUsuario;
     }
 
-    public void setResEmpleado(Empleado resEmpleado) {
-        this.resEmpleado = resEmpleado;
+    public void setResUsuario(String resUsuario) {
+        this.resUsuario = resUsuario;
+    }
+
+    public String getResEstado() {
+        return resEstado;
+    }
+
+    public void setResEstado(String resEstado) {
+        this.resEstado = resEstado;
     }
 }

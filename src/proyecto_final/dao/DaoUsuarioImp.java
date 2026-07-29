@@ -29,7 +29,6 @@ public class DaoUsuarioImp implements DaoUsuario{
                 String cedulaEmpleado = rs.getString("emp_cedula");
 
                 usuEncontrado = new Usuario(nombreUsuario, contrasenia);
-                System.out.println("[ACCESO CORRECTO] " + usuEncontrado.mostrarEmpleado());
                 
                 PreparedStatement ps2 = conexionBD.prepareStatement(queryEmp);
                 ps2.setString(1, cedulaEmpleado);

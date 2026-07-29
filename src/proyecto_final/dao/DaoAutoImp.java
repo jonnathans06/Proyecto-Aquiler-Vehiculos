@@ -159,19 +159,19 @@ public class DaoAutoImp implements DaoAuto{
     }    
 
     @Override
-    public List<AutoDTO> buscarAutoReserva(String marca, String tipo) {
+    public List<AutoDTO> buscarAutoReserva(String tipo) {
         autos.clear();
         String query = "select au.aut_matricula, ma.mar_nombre, mo.mod_nombre, ti.tip_nombre, au.aut_anio, mo.mod_capacidad, mo.mod_precio_dia, au.aut_color, au.aut_kilometraje, au.aut_estado "
                      + "from alq_autos au "
                      + "join alq_modelos mo on au.mod_codigo = mo.mod_codigo "
                      + "join alq_marcas ma on mo.mar_codigo = ma.mar_codigo "
                      + "join alq_tipos_autos ti on mo.tip_codigo = ti.tip_codigo"
-                     + " where ma.mar_nombre = ? and ti.tip_nombre = ? and au.aut_estado = 'DISPONIBLE'";
+                     + " where ti.tip_nombre = ? and au.aut_estado = 'ACTIVO'"
+                     + " order by ma.mar_nombre";
 
         try {
             PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1, marca);
-            ps.setString(2, tipo);
+            ps.setString(1, tipo);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {

@@ -19,6 +19,10 @@ public class Cliente {
         this.cliEstado = cliEstado;
     }
 
+    public Cliente() {
+    
+    }
+    
     public String getCliCedula() {
         return cliCedula;
     }
