@@ -14,19 +14,23 @@ import proyecto_final.modelo.Reserva;
 import proyecto_final.vista.SistemaVista;
 import proyecto_final.vista.clientes.CliCrearVista;
 import proyecto_final.vista.reservas.ResCrearVista;
+import proyecto_final.vista.reservas.ResListarVista;
 
 public class ReservaControlador {
     private SistemaVista sistemaVista;
     private CliCrearVista cliCrearVista;
     private ResCrearVista resCrearVista;
+    private ResListarVista resListarVista;
     private DaoCliente daoCliente;
     private DaoAuto daoAuto;
     private DaoReserva daoReserva;
 
-    public ReservaControlador(SistemaVista sistemaVista, CliCrearVista cliCrearVista, ResCrearVista resCrearVista, DaoCliente daoCliente, DaoAuto daoAuto, DaoReserva daoReserva) {
+    public ReservaControlador(SistemaVista sistemaVista, CliCrearVista cliCrearVista, ResCrearVista resCrearVista, ResListarVista resListarVista, 
+                              DaoCliente daoCliente, DaoAuto daoAuto, DaoReserva daoReserva) {
         this.sistemaVista = sistemaVista;
         this.cliCrearVista = cliCrearVista;
         this.resCrearVista = resCrearVista;
+        this.resListarVista = resListarVista;
         this.daoCliente = daoCliente;
         this.daoAuto = daoAuto;
         this.daoReserva = daoReserva;
@@ -52,6 +56,16 @@ public class ReservaControlador {
         // Crear Reserva
         resCrearVista.getBtnConfirmar().addActionListener((e) -> {
             crearReserva();
+        });
+        
+        // Listar Todas
+        resListarVista.getBtnListar().addActionListener((e) -> {
+            listarTodas();
+        });
+        
+        // Buscar Rerserva Listar
+        resListarVista.getBtnBuscar().addActionListener((e) -> {
+            buscarReservaListar();
         });
     }
     
@@ -152,5 +166,23 @@ public class ReservaControlador {
                 fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
                 hora.toInstant().atZone(ZoneId.systemDefault()).toLocalTime().withSecond(0).withNano(0)
         );
+    }
+    
+    private void listarTodas(){
+        resListarVista.cargarDatosResevas(daoReserva.listarTodas());
+    }
+    
+    private void buscarReservaListar() {
+        if (resListarVista.getTxtBusqueda().getText().isEmpty()) {
+            resListarVista.mostrarMensajes("Debe colocar el codigo de reserva para buscar");
+            return;
+        }
+        
+        if (!resListarVista.getTxtBusqueda().getText().matches("\\d+")) {
+            resListarVista.mostrarMensajes("Codigo invalido");
+            return;
+        }
+        
+        resListarVista.cargarDatosResevas(daoReserva.buscarReserva(Integer.parseInt(resListarVista.getTxtBusqueda().getText().trim())));
     }
 }
