@@ -224,8 +224,6 @@ public class EmpleadoControlador {
             
             if (huboCambios(empActual)) {
                 Empleado empleadoEditado = new Empleado(cedula, nombres, apellidos, direccion, telefono, correo, tipoPersonal, cargo);
-                System.out.println(empActual);
-                System.out.println(empleadoEditado);
                 actualizo =  daoEmpleado.actualizarEmpleado(empleadoEditado);
             } else {
                 empActVista.mostrarMensaje("No se detectaron modificaciones en los campos.");
@@ -238,7 +236,7 @@ public class EmpleadoControlador {
             }
         }
         catch (Exception e) {
-            System.out.println("[ERROR al actualizar]: " + e.getMessage());
+            e.printStackTrace();
             empActVista.mostrarMensaje("Datos no validos");
         }
     }

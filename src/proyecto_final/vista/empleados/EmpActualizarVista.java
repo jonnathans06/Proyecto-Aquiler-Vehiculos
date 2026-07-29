@@ -17,7 +17,6 @@ public class EmpActualizarVista extends javax.swing.JInternalFrame {
     }    
     
     public void cargarEmpleado(Empleado emp){
-        System.out.println(emp);
         
         txtCedula.setText(emp.getEmpCedula());
         txtNombre.setText(emp.getEmpNombre());
@@ -271,6 +270,7 @@ public class EmpActualizarVista extends javax.swing.JInternalFrame {
         txtCedula.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         txtCedula.setForeground(new java.awt.Color(81, 89, 108));
         txtCedula.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
+        txtCedula.setEnabled(false);
 
         txtNombre.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         txtNombre.setForeground(new java.awt.Color(81, 89, 108));
@@ -311,6 +311,7 @@ public class EmpActualizarVista extends javax.swing.JInternalFrame {
         txtUsername.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         txtUsername.setForeground(new java.awt.Color(81, 89, 108));
         txtUsername.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
+        txtUsername.setEnabled(false);
 
         lblContrasenia.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         lblContrasenia.setForeground(new java.awt.Color(81, 89, 108));
@@ -319,6 +320,7 @@ public class EmpActualizarVista extends javax.swing.JInternalFrame {
         txtContrasenia.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         txtContrasenia.setForeground(new java.awt.Color(81, 89, 108));
         txtContrasenia.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
+        txtContrasenia.setEnabled(false);
 
         lblTipoPersonal.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         lblTipoPersonal.setForeground(new java.awt.Color(81, 89, 108));
@@ -394,8 +396,10 @@ public class EmpActualizarVista extends javax.swing.JInternalFrame {
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelDatosLayout.createSequentialGroup()
                         .addGap(207, 207, 207)
-                        .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(panelBusqueda, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(panelBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panelDatosLayout.createSequentialGroup()
+                        .addGap(197, 197, 197)
+                        .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelDatosLayout.createSequentialGroup()
                                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -437,12 +441,9 @@ public class EmpActualizarVista extends javax.swing.JInternalFrame {
                                         .addGap(12, 12, 12)
                                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(panelDatosLayout.createSequentialGroup()
-                        .addGap(197, 197, 197)
-                        .addComponent(lblDireccion)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                            .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(lblDireccion))
+                        .addGap(0, 2, Short.MAX_VALUE)))
                 .addGap(183, 183, 183))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDatosLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -498,7 +499,7 @@ public class EmpActualizarVista extends javax.swing.JInternalFrame {
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPrincipalLayout.createSequentialGroup()
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 1209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
