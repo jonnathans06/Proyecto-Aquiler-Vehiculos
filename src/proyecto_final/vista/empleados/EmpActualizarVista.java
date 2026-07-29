@@ -17,6 +17,8 @@ public class EmpActualizarVista extends javax.swing.JInternalFrame {
     }    
     
     public void cargarEmpleado(Empleado emp){
+        System.out.println(emp);
+        
         txtCedula.setText(emp.getEmpCedula());
         txtNombre.setText(emp.getEmpNombre());
         txtApellido.setText(emp.getEmpApellido());

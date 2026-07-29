@@ -5,7 +5,7 @@ import java.sql.*;
 public class ConexionDB {
     static String user = "JSAAVEDRA";
     static String pass = "hola1243";
-    static String url = "jdbc:oracle:thin:@localhost:1521:xe";
+    static String url = "jdbc:oracle:thin:@100.86.18.56:1521:xe";
     private static Connection con = null;
 
     public static Connection conectar() {

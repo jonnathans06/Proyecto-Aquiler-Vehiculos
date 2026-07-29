@@ -105,6 +105,7 @@ public class Empleado {
                 + ", Telefono: " + empTelefono 
                 + ", Correo: " + empCorreo
                 + ", Tipo Personal: " + empTipoPersonal
-                + ", Cargo: " + empCargo;
+                + ", Cargo: " + empCargo
+                + ", Usuario: " + getEmpUsuario().getUsuUsername();
     }
 }
