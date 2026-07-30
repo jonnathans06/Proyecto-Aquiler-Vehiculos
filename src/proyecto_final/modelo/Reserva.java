@@ -30,7 +30,11 @@ public class Reserva {
         this.resUsuario = resUsuario;
         this.resEstado = "ACTIVA";
     }
-
+    
+    public Reserva(int resCodigo) {
+        this.resCodigo = resCodigo;
+    }
+    
     public int getResCodigo() {
         return resCodigo;
     }

@@ -2,23 +2,28 @@ package proyecto_final;
 
 import proyecto_final.controlador.AutoControlador;
 import proyecto_final.controlador.ClienteControlador;
+import proyecto_final.controlador.ContratoControlador;
 import proyecto_final.controlador.EmpleadoControlador;
 import proyecto_final.controlador.LoginControlador;
 import proyecto_final.controlador.ReservaControlador;
 import proyecto_final.dao.DaoAutoImp;
 import proyecto_final.dao.DaoClienteImp;
+import proyecto_final.dao.DaoContratoImp;
 import proyecto_final.dao.DaoEmpleadoImp;
 import proyecto_final.dao.DaoMarcaImp;
 import proyecto_final.dao.DaoModeloImp;
 import proyecto_final.dao.DaoReservaImp;
+import proyecto_final.dao.DaoServicioImp;
 import proyecto_final.dao.DaoTipoAutoImp;
 import proyecto_final.dao.DaoUsuarioImp;
 import proyecto_final.dao.interfaces.DaoAuto;
 import proyecto_final.dao.interfaces.DaoCliente;
+import proyecto_final.dao.interfaces.DaoContrato;
 import proyecto_final.dao.interfaces.DaoEmpleado;
 import proyecto_final.dao.interfaces.DaoMarca;
 import proyecto_final.dao.interfaces.DaoModelo;
 import proyecto_final.dao.interfaces.DaoReserva;
+import proyecto_final.dao.interfaces.DaoServicio;
 import proyecto_final.dao.interfaces.DaoTipoAuto;
 import proyecto_final.dao.interfaces.DaoUsuario;
 import proyecto_final.vista.SistemaVista;
@@ -90,6 +95,8 @@ public class Main {
         DaoModelo daoModelo = new DaoModeloImp();
         DaoAuto daoAuto = new DaoAutoImp();
         DaoReserva daoReserva = new DaoReservaImp();
+        DaoServicio daoServicio = new DaoServicioImp();
+        DaoContrato daoContrato = new DaoContratoImp();
         
         //Controladores
         LoginControlador loginControlador = new LoginControlador(daoUsuario, loginVista, principalVista);
@@ -97,6 +104,7 @@ public class Main {
         ClienteControlador cliControlador = new ClienteControlador(cliCrearVista, cliListarVista, cliActualizarVista, cliEliminarVista, daoCliente);
         AutoControlador autoControlador = new AutoControlador(autCrearVista, autListarVista, autActualizarVista, autEliminarVista, daoTipoAuto, daoMarca, daoModelo, daoAuto);
         ReservaControlador reservaControlador = new ReservaControlador(principalVista, cliCrearVista, resCrearVista, resListarVista, resActualizarVista, daoCliente, daoAuto, daoReserva);
+        ContratoControlador contratoControlador = new ContratoControlador(conCrearVista, daoCliente, daoReserva, daoServicio, daoAuto, daoContrato);
     }
     
 }
