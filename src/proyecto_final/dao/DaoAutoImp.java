@@ -198,4 +198,25 @@ public class DaoAutoImp implements DaoAuto{
         }
         return autos;
     }
+
+    @Override
+    public boolean cambiarEstadoAuto(String matricula, String estado) {
+        String query = "update alq_autos set aut_estado = ? "
+                      + "where aut_matricula = ?";
+
+         try {
+             PreparedStatement ps = con.prepareStatement(query);
+             ps.setString(1, estado);
+             ps.setString(2, matricula);
+
+             ps.executeUpdate();
+             ps.close();
+             return true;
+         } catch (SQLException e) {
+             System.out.println(e.getMessage());
+         } catch (Exception e) {
+             System.out.println(e.getMessage());
+         }
+         return false;
+    }
 }

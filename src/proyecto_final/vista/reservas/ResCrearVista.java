@@ -145,6 +145,7 @@ public class ResCrearVista extends javax.swing.JInternalFrame {
         }
         tblDatos.setModel(modelo);
     }
+    
     private void seleccionarAuto() {
         int filaSeleccionada = tblDatos.getSelectedRow();
 
