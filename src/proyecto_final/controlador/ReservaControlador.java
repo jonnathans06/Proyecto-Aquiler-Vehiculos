@@ -270,13 +270,6 @@ public class ReservaControlador {
     }
     
     private void actualizarReserva(){
-        boolean actualizo = false;
-
-        if (!buscarReservaActualizar()) {
-            resActualizarVista.mostrarMensajes("Reserva no encontrada");
-            return;
-        }
-
         String codigoTexto = resActualizarVista.getTxtBusqueda().getText().trim();
         String matriculaAnterior = resActualizarVista.getTxtMatriculaAnterior().getText().trim();
         String matriculaNueva = resActualizarVista.getTxtMatriculaNuevo().getText().trim();
@@ -287,7 +280,7 @@ public class ReservaControlador {
         Date horaFin = (Date) resActualizarVista.getSpHoraFin().getValue();
 
         if (codigoTexto.isEmpty()) {
-            resActualizarVista.mostrarMensajes("Ingrese el código de la reserva");
+            resActualizarVista.mostrarMensajes("Primero busque una reserva");
             return;
         }
 
@@ -296,9 +289,13 @@ public class ReservaControlador {
             return;
         }
 
-        if (matriculaNueva.isEmpty()) {
-            resActualizarVista.mostrarMensajes("Debe seleccionar un auto");
+        if (matriculaAnterior.isEmpty()) {
+            resActualizarVista.mostrarMensajes("Primero busque una reserva");
             return;
+        }
+
+        if (matriculaNueva.isEmpty()) {
+            matriculaNueva = matriculaAnterior;
         }
 
         if (fechaInicio == null || fechaFin == null) {
@@ -311,8 +308,6 @@ public class ReservaControlador {
             return;
         }
 
-        int codigo = Integer.parseInt(codigoTexto);
-
         LocalDateTime fechaHoraInicio = convertirFechaHora(fechaInicio, horaInicio);
         LocalDateTime fechaHoraFin = convertirFechaHora(fechaFin, horaFin);
 
@@ -321,6 +316,8 @@ public class ReservaControlador {
             return;
         }
 
+        int codigo = Integer.parseInt(codigoTexto);
+
         ReservaDTO reservaAnterior = daoReserva.buscarReservaCruda(codigo);
 
         if (reservaAnterior == null) {
@@ -328,26 +325,52 @@ public class ReservaControlador {
             return;
         }
 
-        Cliente cliente = daoCliente.buscarClientePorCedula(reservaAnterior.getCliente());
+        Cliente cliente = daoCliente.buscarClientePorCedula(
+                reservaAnterior.getCliente()
+        );
+
+        if (cliente == null) {
+            resActualizarVista.mostrarMensajes("No se pudo recuperar el cliente");
+            return;
+        }
+
+        if (LoginControlador.getUsuarioAutenticado() == null) {
+            resActualizarVista.mostrarMensajes("No se pudo obtener el usuario autenticado");
+            return;
+        }
 
         Auto auto = new Auto();
         auto.setAutMatricula(matriculaNueva);
 
         String usuario = LoginControlador.getUsuarioAutenticado().getUsuUsername();
 
-        Reserva reserva = new Reserva(codigo, fechaHoraInicio, fechaHoraFin, cliente, auto, usuario, reservaAnterior.getEstado());
+        Reserva reserva = new Reserva(
+                codigo,
+                fechaHoraInicio,
+                fechaHoraFin,
+                cliente,
+                auto,
+                usuario,
+                reservaAnterior.getEstado()
+        );
 
         boolean cambioAuto = !matriculaAnterior.equals(matriculaNueva);
 
         if (cambioAuto) {
-            boolean liberoAutoAnterior = daoAuto.cambiarEstadoAuto(matriculaAnterior, "ACTIVO");
+            boolean liberoAutoAnterior = daoAuto.cambiarEstadoAuto(
+                    matriculaAnterior,
+                    "ACTIVO"
+            );
 
             if (!liberoAutoAnterior) {
                 resActualizarVista.mostrarMensajes("No se pudo liberar el auto anterior");
                 return;
             }
 
-            boolean reservoAutoNuevo = daoAuto.cambiarEstadoAuto(matriculaNueva, "ALQUILADO");
+            boolean reservoAutoNuevo = daoAuto.cambiarEstadoAuto(
+                    matriculaNueva,
+                    "ALQUILADO"
+            );
 
             if (!reservoAutoNuevo) {
                 daoAuto.cambiarEstadoAuto(matriculaAnterior, "ALQUILADO");
@@ -356,7 +379,7 @@ public class ReservaControlador {
             }
         }
 
-        actualizo = daoReserva.actualizarReserva(reserva);
+        boolean actualizo = daoReserva.actualizarReserva(reserva);
 
         if (actualizo) {
             resActualizarVista.mostrarMensajes("Reserva actualizada correctamente");

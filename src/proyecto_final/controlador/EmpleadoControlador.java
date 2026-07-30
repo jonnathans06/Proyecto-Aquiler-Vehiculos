@@ -212,32 +212,73 @@ public class EmpleadoControlador {
     
     private void actualizarEmpleado() {
         boolean actualizo = false;
+
         try {
             String cedula = empActVista.getTxtCedula().getText().trim();
             String nombres = empActVista.getTxtNombre().getText().trim();
             String apellidos = empActVista.getTxtApellido().getText().trim();
-            String direccion = empActVista.getTxtDireccion().getText().trim(); 
+            String direccion = empActVista.getTxtDireccion().getText().trim();
             String telefono = empActVista.getTxtTelefono().getText().trim();
             String correo = empActVista.getTxtCorreo().getText().trim();
-            String tipoPersonal = empActVista.getCbxTipoPersonal().getSelectedItem().toString().toUpperCase().trim();
-            String cargo = empActVista.getCbxCargo().getSelectedItem().toString().toUpperCase().trim();
-            
-            if (huboCambios(empActual)) {
-                Empleado empleadoEditado = new Empleado(cedula, nombres, apellidos, direccion, telefono, correo, tipoPersonal, cargo);
-                actualizo =  daoEmpleado.actualizarEmpleado(empleadoEditado);
-            } else {
-                empActVista.mostrarMensaje("No se detectaron modificaciones en los campos.");
+
+            Object tipoSeleccionado = empActVista.getCbxTipoPersonal().getSelectedItem();
+            Object cargoSeleccionado = empActVista.getCbxCargo().getSelectedItem();
+
+            if (cedula.isEmpty() || nombres.isEmpty() || apellidos.isEmpty()
+                    || direccion.isEmpty() || telefono.isEmpty() || correo.isEmpty()) {
+
+                empActVista.mostrarMensaje("Todos los campos son obligatorios");
+                return;
             }
-            
+
+            if (tipoSeleccionado == null || cargoSeleccionado == null) {
+                empActVista.mostrarMensaje("Seleccione el tipo de personal y el cargo");
+                return;
+            }
+
+            if (!nombres.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+                empActVista.mostrarMensaje("Los nombres solo deben contener letras");
+                return;
+            }
+
+            if (!apellidos.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+                empActVista.mostrarMensaje("Los apellidos solo deben contener letras");
+                return;
+            }
+
+            if (!telefono.matches("\\d{10}")) {
+                empActVista.mostrarMensaje("El teléfono debe contener exactamente 10 números");
+                return;
+            }
+
+            if (!correo.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+                empActVista.mostrarMensaje("Ingrese un correo electrónico válido");
+                return;
+            }
+
+            String tipoPersonal = tipoSeleccionado.toString().toUpperCase().trim();
+            String cargo = cargoSeleccionado.toString().toUpperCase().trim();
+
+            if (!huboCambios(empActual)) {
+                empActVista.mostrarMensaje("No se detectaron modificaciones en los campos");
+                return;
+            }
+
+            Empleado empleadoEditado = new Empleado(cedula, nombres, apellidos, direccion, telefono, correo, tipoPersonal, cargo);
+
+            actualizo = daoEmpleado.actualizarEmpleado(empleadoEditado);
+
             if (actualizo) {
-                empActVista.mostrarMensaje("Empleado Actualizado Exitosamente");
+                empActVista.mostrarMensaje("Empleado actualizado exitosamente");
                 empActVista.limpiar();
                 empActual = null;
+            } else {
+                empActVista.mostrarMensaje("No se pudo actualizar el empleado");
             }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            empActVista.mostrarMensaje("Datos no validos");
+
+        } catch (Exception e) {
+            System.out.println("Error al actualizar empleado: " + e.getMessage());
+            empActVista.mostrarMensaje("Datos no válidos");
         }
     }
     

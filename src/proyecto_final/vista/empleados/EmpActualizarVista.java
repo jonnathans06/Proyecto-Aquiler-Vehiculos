@@ -267,6 +267,8 @@ public class EmpActualizarVista extends javax.swing.JInternalFrame {
         lblCedula.setForeground(new java.awt.Color(81, 89, 108));
         lblCedula.setText("Cédula:");
 
+        txtCedula.setEditable(false);
+        txtCedula.setBackground(new java.awt.Color(255, 255, 255));
         txtCedula.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         txtCedula.setForeground(new java.awt.Color(81, 89, 108));
         txtCedula.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
@@ -308,6 +310,8 @@ public class EmpActualizarVista extends javax.swing.JInternalFrame {
         lblNombreUsuaro.setForeground(new java.awt.Color(81, 89, 108));
         lblNombreUsuaro.setText("Nombre Usuario:");
 
+        txtUsername.setEditable(false);
+        txtUsername.setBackground(new java.awt.Color(255, 255, 255));
         txtUsername.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         txtUsername.setForeground(new java.awt.Color(81, 89, 108));
         txtUsername.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
@@ -317,6 +321,8 @@ public class EmpActualizarVista extends javax.swing.JInternalFrame {
         lblContrasenia.setForeground(new java.awt.Color(81, 89, 108));
         lblContrasenia.setText("Contraseña:");
 
+        txtContrasenia.setEditable(false);
+        txtContrasenia.setBackground(new java.awt.Color(255, 255, 255));
         txtContrasenia.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         txtContrasenia.setForeground(new java.awt.Color(81, 89, 108));
         txtContrasenia.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
@@ -329,6 +335,7 @@ public class EmpActualizarVista extends javax.swing.JInternalFrame {
         cbxTipoPersonal.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         cbxTipoPersonal.setForeground(new java.awt.Color(81, 89, 108));
         cbxTipoPersonal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxTipoPersonal.setEnabled(false);
 
         jSeparator1.setForeground(new java.awt.Color(81, 89, 108));
 
@@ -387,6 +394,7 @@ public class EmpActualizarVista extends javax.swing.JInternalFrame {
         cbxCargo.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         cbxCargo.setForeground(new java.awt.Color(81, 89, 108));
         cbxCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxCargo.setEnabled(false);
 
         javax.swing.GroupLayout panelDatosLayout = new javax.swing.GroupLayout(panelDatos);
         panelDatos.setLayout(panelDatosLayout);

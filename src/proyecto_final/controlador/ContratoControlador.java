@@ -12,6 +12,8 @@ import proyecto_final.dao.interfaces.DaoContrato;
 import proyecto_final.dao.interfaces.DaoReserva;
 import proyecto_final.dao.interfaces.DaoServicio;
 import proyecto_final.dto.AutoDTO;
+import proyecto_final.dto.ContratoDTO;
+import proyecto_final.dto.DetalleContratoDTO;
 import proyecto_final.dto.DetalleServicioDTO;
 import proyecto_final.dto.ReservaDTO;
 import proyecto_final.modelo.Auto;
@@ -21,10 +23,13 @@ import proyecto_final.modelo.Reserva;
 import proyecto_final.modelo.Servicio;
 import proyecto_final.modelo.Usuario;
 import proyecto_final.vista.contratos.ConCrearVista;
+import proyecto_final.vista.contratos.ConListarVista;
 
 public class ContratoControlador {
 
     private ConCrearVista conCrearVista;
+    private ConListarVista conListarVista;
+    private List<ContratoDTO> contratosListados;
 
     private DaoCliente daoCliente;
     private DaoReserva daoReserva;
@@ -42,11 +47,12 @@ public class ContratoControlador {
 
     private AutoDTO autoSeleccionado;
 
-    public ContratoControlador(ConCrearVista conCrearVista, DaoCliente daoCliente,
-            DaoReserva daoReserva, DaoServicio daoServicio, DaoAuto daoAuto,
-            DaoContrato daoContrato) {
+    public ContratoControlador(ConCrearVista conCrearVista, ConListarVista conListarVista,
+            DaoCliente daoCliente, DaoReserva daoReserva, DaoServicio daoServicio,
+            DaoAuto daoAuto, DaoContrato daoContrato) {
 
         this.conCrearVista = conCrearVista;
+        this.conListarVista = conListarVista;
         this.daoCliente = daoCliente;
         this.daoReserva = daoReserva;
         this.daoServicio = daoServicio;
@@ -87,6 +93,16 @@ public class ContratoControlador {
                         "date",
                         e -> actualizarSubtotalAuto()
                 );
+        
+        conListarVista.getBtnBuscar().addActionListener(e -> buscarContrato());
+        conListarVista.getBtnListar().addActionListener(e -> listarContratos());
+        conListarVista.getBtnLimpiar().addActionListener(e -> limpiarListado());
+
+        conListarVista.getTblContrato().getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                seleccionarContratoListado();
+            }
+        });
     }
 
     private void buscarClienteContrato(){
@@ -524,4 +540,65 @@ public class ContratoControlador {
 
         conCrearVista.getTxtBusqueda().requestFocus();
     }
+    
+    private void buscarContrato(){
+        String codigoTexto = conListarVista.getTxtBusqueda().getText().trim();
+
+        if (codigoTexto.isEmpty()) {
+            conListarVista.mostrarMensajes("Ingrese el código de la reserva");
+            return;
+        }
+
+        if (!codigoTexto.matches("\\d+")) {
+            conListarVista.mostrarMensajes("El código debe ser numérico");
+            return;
+        }
+
+        int codigoReserva = Integer.parseInt(codigoTexto);
+
+        contratosListados = daoContrato.buscarContratosPorReserva(codigoReserva);
+
+        if (contratosListados == null || contratosListados.isEmpty()) {
+            conListarVista.mostrarMensajes("No se encontró un contrato para esa reserva");
+            conListarVista.limpiarTablas();
+            return;
+        }
+
+        conListarVista.cargarContratos(contratosListados);
+    }
+    
+    private void listarContratos(){
+        contratosListados = daoContrato.listarContratos();
+
+        if (contratosListados == null || contratosListados.isEmpty()) {
+            conListarVista.mostrarMensajes("No existen contratos registrados");
+            conListarVista.limpiarTablas();
+            return;
+        }
+
+        conListarVista.cargarContratos(contratosListados);
+    }
+    
+    private void seleccionarContratoListado(){
+        int fila = conListarVista.getTblContrato().getSelectedRow();
+
+        if (fila < 0 || contratosListados == null || fila >= contratosListados.size()) {
+            return;
+        }
+
+        ContratoDTO contratoSeleccionado = contratosListados.get(fila);
+
+        List<DetalleContratoDTO> detalles = daoContrato.listarDetallesContrato(
+                contratoSeleccionado.getCodigoContrato()
+        );
+
+        conListarVista.cargarDetalles(detalles);
+    }
+    
+    private void limpiarListado(){
+        contratosListados = null;
+        conListarVista.limpiarCampos();
+    }
+    
+    
 }

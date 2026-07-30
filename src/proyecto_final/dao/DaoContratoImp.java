@@ -1,8 +1,11 @@
 package proyecto_final.dao;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import proyecto_final.dao.interfaces.DaoContrato;
+import proyecto_final.dto.ContratoDTO;
+import proyecto_final.dto.DetalleContratoDTO;
 import proyecto_final.dto.DetalleServicioDTO;
 import proyecto_final.modelo.Contrato;
 import proyecto_final.sql.ConexionDB;
@@ -157,5 +160,156 @@ public class DaoContratoImp implements DaoContrato{
                 System.out.println("Error al cerrar recursos: " + e.getMessage());
             }
         }
+    }
+    
+    @Override
+    public List<ContratoDTO> buscarContratosPorReserva(int codigoReserva) {
+        List<ContratoDTO> contratos = new ArrayList<>();
+
+        String query = "select c.con_codigo, c.res_codigo, c.con_fecha_inicio, c.con_fecha_fin, "
+                     + "ma.mar_nombre || ' ' || mo.mod_nombre as vehiculo, "
+                     + "a.aut_matricula, "
+                     + "cl.cli_nombre || ' ' || cl.cli_apellido as cliente, "
+                     + "em.emp_nombre || ' ' || em.emp_apellido as usuario, "
+                     + "c.con_subtotal_auto, c.con_subtotal_servicios, "
+                     + "(c.con_subtotal_auto + c.con_subtotal_servicios) as subtotal_total, "
+                     + "c.con_iva, c.con_total, c.con_estado "
+                     + "from alq_contratos c "
+                     + "inner join alq_clientes cl on c.cli_cedula = cl.cli_cedula "
+                     + "inner join alq_autos a on c.aut_matricula = a.aut_matricula "
+                     + "inner join alq_modelos mo on a.mod_codigo = mo.mod_codigo "
+                     + "inner join alq_marcas ma on mo.mar_codigo = ma.mar_codigo "
+                     + "inner join alq_usuarios u on c.usu_username = u.usu_username "
+                     + "inner join alq_empleados em on u.emp_cedula = em.emp_cedula "
+                     + "where c.res_codigo = ? "
+                     + "order by c.con_codigo";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, codigoReserva);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                contratos.add(new ContratoDTO(
+                        rs.getInt("con_codigo"),
+                        rs.getInt("res_codigo"),
+                        rs.getDate("con_fecha_inicio").toLocalDate(),
+                        rs.getDate("con_fecha_fin").toLocalDate(),
+                        rs.getString("vehiculo"),
+                        rs.getString("aut_matricula"),
+                        rs.getString("cliente"),
+                        rs.getString("usuario"),
+                        rs.getDouble("con_subtotal_auto"),
+                        rs.getDouble("con_subtotal_servicios"),
+                        rs.getDouble("subtotal_total"),
+                        rs.getDouble("con_iva"),
+                        rs.getDouble("con_total"),
+                        rs.getString("con_estado")
+                ));
+            }
+
+            rs.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            System.out.println("Error al buscar contratos: " + e.getMessage());
+        }
+
+        return contratos;
+    }
+    
+    @Override
+    public List<ContratoDTO> listarContratos() {
+        List<ContratoDTO> contratos = new ArrayList<>();
+
+        String query = "select c.con_codigo, c.res_codigo, c.con_fecha_inicio, c.con_fecha_fin, "
+                     + "ma.mar_nombre || ' ' || mo.mod_nombre as vehiculo, "
+                     + "a.aut_matricula, "
+                     + "cl.cli_nombre || ' ' || cl.cli_apellido as cliente, "
+                     + "em.emp_nombre || ' ' || em.emp_apellido as usuario, "
+                     + "c.con_subtotal_auto, c.con_subtotal_servicios, "
+                     + "(c.con_subtotal_auto + c.con_subtotal_servicios) as subtotal_total, "
+                     + "c.con_iva, c.con_total, c.con_estado "
+                     + "from alq_contratos c "
+                     + "inner join alq_clientes cl on c.cli_cedula = cl.cli_cedula "
+                     + "inner join alq_autos a on c.aut_matricula = a.aut_matricula "
+                     + "inner join alq_modelos mo on a.mod_codigo = mo.mod_codigo "
+                     + "inner join alq_marcas ma on mo.mar_codigo = ma.mar_codigo "
+                     + "inner join alq_usuarios u on c.usu_username = u.usu_username "
+                     + "inner join alq_empleados em on u.emp_cedula = em.emp_cedula "
+                     + "order by c.con_codigo";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                contratos.add(new ContratoDTO(
+                        rs.getInt("con_codigo"),
+                        rs.getInt("res_codigo"),
+                        rs.getDate("con_fecha_inicio").toLocalDate(),
+                        rs.getDate("con_fecha_fin").toLocalDate(),
+                        rs.getString("vehiculo"),
+                        rs.getString("aut_matricula"),
+                        rs.getString("cliente"),
+                        rs.getString("usuario"),
+                        rs.getDouble("con_subtotal_auto"),
+                        rs.getDouble("con_subtotal_servicios"),
+                        rs.getDouble("subtotal_total"),
+                        rs.getDouble("con_iva"),
+                        rs.getDouble("con_total"),
+                        rs.getString("con_estado")
+                ));
+            }
+
+            rs.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            System.out.println("Error al listar contratos: " + e.getMessage());
+        }
+
+        return contratos;
+    }
+    
+    @Override
+    public List<DetalleContratoDTO> listarDetallesContrato(int codigoContrato) {
+        List<DetalleContratoDTO> detalles = new ArrayList<>();
+
+        String query = "select d.det_ser_codigo, s.ser_nombre, "
+                     + "d.det_ser_precio_unitario, d.det_cantidad, "
+                     + "d.det_ser_iva, d.con_ser_subtotal, d.det_ser_total "
+                     + "from alq_contrato_servicios_detalles d "
+                     + "inner join alq_servicios s on d.ser_codigo = s.ser_codigo "
+                     + "where d.con_codigo = ? "
+                     + "order by d.det_ser_codigo";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, codigoContrato);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                detalles.add(new DetalleContratoDTO(
+                        rs.getInt("det_ser_codigo"),
+                        rs.getString("ser_nombre"),
+                        rs.getDouble("det_ser_precio_unitario"),
+                        rs.getInt("det_cantidad"),
+                        rs.getDouble("det_ser_iva"),
+                        rs.getDouble("con_ser_subtotal"),
+                        rs.getDouble("det_ser_total")
+                ));
+            }
+
+            rs.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            System.out.println("Error al listar detalles del contrato: " + e.getMessage());
+        }
+
+        return detalles;
     }
 }

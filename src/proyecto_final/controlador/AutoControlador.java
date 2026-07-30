@@ -88,40 +88,38 @@ public class AutoControlador {
         });
 
         //Cargar tipo de auto cuando cambia el modelo
-        autoCrearVista.getCbxModelo().addActionListener((e) -> {
-            try {
-                Modelo modelo = daoModelo.buscarModeloPorNombre(autoCrearVista.getCbxModelo().getSelectedItem().toString());
-                
-                if (modelo != null) {
-                    TipoAuto tipoAuto = daoTipo.buscarPorCodigo(modelo.getTipAuto());
-                    autoCrearVista.getTxtTipo().setText(tipoAuto.getTipNombre());
-                    
-                    //Cargar capacidad
-                    int capacidad = 0;
-                    switch(tipoAuto.getTipNombre()) {
-                        case "Económico":
-                            capacidad = 4;
-                            break;
-                        case "Compacto":
-                            capacidad = 5;
-                            break;
-                        case "Sedán":
-                            capacidad = 5;
-                            break;
-                        case "SUV":
-                            capacidad = 7;
-                            break;
-                        case "Camioneta":
-                            capacidad = 5;
-                            break;
-                        default:
-                            capacidad = 0;
-                    }
-                    autoCrearVista.getTxtCapacidad().setText(String.valueOf(capacidad));
-                }
-            } catch (NullPointerException eNull) {
-                autoCrearVista.getTxtTipo().setText("Error Inesperado");
+        autoCrearVista.getCbxModelo().addActionListener(e -> {
+            Object itemSeleccionado = autoCrearVista.getCbxModelo().getSelectedItem();
+
+            if (itemSeleccionado == null) {
+                return;
             }
+
+            Modelo modelo = daoModelo.buscarModeloPorNombre(
+                    itemSeleccionado.toString()
+            );
+
+            if (modelo == null) {
+                autoCrearVista.getTxtTipo().setText("");
+                autoCrearVista.getTxtCapacidad().setText("");
+                return;
+            }
+
+            TipoAuto tipoAuto = daoTipo.buscarPorCodigo(
+                    modelo.getTipAuto()
+            );
+
+            if (tipoAuto != null) {
+                autoCrearVista.getTxtTipo().setText(
+                        tipoAuto.getTipNombre()
+                );
+            } else {
+                autoCrearVista.getTxtTipo().setText("");
+            }
+
+            autoCrearVista.getTxtCapacidad().setText(
+                    String.valueOf(modelo.getModCapacidad())
+            );
         });
     }
     

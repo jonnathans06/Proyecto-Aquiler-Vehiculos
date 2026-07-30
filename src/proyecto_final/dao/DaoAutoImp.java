@@ -14,25 +14,31 @@ public class DaoAutoImp implements DaoAuto{
     
     @Override
     public boolean crearAuto(Auto auto) {
-        String query = "insert into alq_autos values (?, ?, ?, ?, ?, ?)";
+        String query = "insert into alq_autos "
+                     + "(aut_matricula, aut_anio, aut_color, aut_kilometraje, aut_estado, mod_codigo) "
+                     + "values (?, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement ps = con.prepareStatement(query);
+
             ps.setString(1, auto.getAutMatricula());
             ps.setInt(2, auto.getAutAnio());
-            ps.setString(3, auto.getAutEstado());
-            ps.setInt(4, auto.getAutModelo());
-            ps.setString(5, auto.getAutColor());
-            ps.setInt(6, auto.getAutKilometraje());
+            ps.setString(3, auto.getAutColor());
+            ps.setInt(4, auto.getAutKilometraje());
+            ps.setString(5, "ACTIVO");
+            ps.setInt(6, auto.getAutModelo());
 
-            ps.executeUpdate();
+            int autoCreado = ps.executeUpdate();
             ps.close();
-            return true;
+
+            return autoCreado == 1;
+
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error al crear auto: " + e.getMessage());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+
         return false;
     }
 

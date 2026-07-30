@@ -105,7 +105,7 @@ public class Main {
         AutoControlador autoControlador = new AutoControlador(autCrearVista, autListarVista, autActualizarVista, autEliminarVista, daoTipoAuto, daoMarca, daoModelo, daoAuto);
         ReservaControlador reservaControlador = new ReservaControlador(principalVista, cliCrearVista, resCrearVista, resListarVista, resActualizarVista, resEliminarVista, daoCliente, daoAuto, daoReserva);
 
-        ContratoControlador contratoControlador = new ContratoControlador(conCrearVista, daoCliente, daoReserva, daoServicio, daoAuto, daoContrato);
+        ContratoControlador contratoControlador = new ContratoControlador(conCrearVista, conListarVista, daoCliente, daoReserva, daoServicio, daoAuto, daoContrato);
     }
     
 }

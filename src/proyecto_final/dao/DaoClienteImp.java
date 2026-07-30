@@ -36,7 +36,7 @@ public class DaoClienteImp implements DaoCliente{
     
     @Override
     public Cliente buscarClientePorCedula(String busqueda) {
-        String query = "select * from alq_clientes where cli_cedula = ?";
+        String query = "select * from alq_clientes c where cli_cedula = ? order by c.cli_apellido";
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, busqueda);
@@ -65,7 +65,7 @@ public class DaoClienteImp implements DaoCliente{
     @Override
     public List<Cliente> buscarClientes(String busqueda) {
         List<Cliente> clientes = new ArrayList<>();
-        String query = "select * from alq_clientes where cli_cedula = ? or cli_nombre like ?";
+        String query = "select * from alq_clientes where cli_cedula = ? or cli_nombre like ? order by c.cli_apellido";
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, busqueda);
@@ -95,7 +95,7 @@ public class DaoClienteImp implements DaoCliente{
     @Override
     public List<Cliente> listarTodods() {
         List<Cliente> clientes = new ArrayList<>();
-        String query = "select * from alq_clientes";
+        String query = "select * from alq_clientes c order by c.cli_apellido";
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
