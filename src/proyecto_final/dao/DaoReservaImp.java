@@ -103,7 +103,7 @@ public class DaoReservaImp implements DaoReserva{
                      + "inner join alq_marcas ma on mo.mar_codigo = ma.mar_codigo "
                      + "inner join alq_usuarios us on r.usu_username = us.usu_username "
                      + "inner join alq_empleados em on us.emp_cedula = em.emp_cedula "
-                     + "order by r.res_codigo";
+                     + "order by r.res_estado";
 
         try {
             PreparedStatement ps = con.prepareStatement(query);
@@ -166,10 +166,61 @@ public class DaoReservaImp implements DaoReserva{
 
         return false;
     }
-
+    
+    
     @Override
-    public boolean eliminarReserva(Reserva reserva) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean eliminarReserva(int codigo, String matricula) {
+        String queryReserva = "update alq_reservas set res_estado = 'CANCELADA' "
+                            + "where res_codigo = ? and res_estado = 'ACTIVA'";
+
+        String queryAuto = "update alq_autos set aut_estado = 'ACTIVO' "
+                         + "where aut_matricula = ? and aut_estado = 'ALQUILADO'";
+
+        try {
+            con.setAutoCommit(false);
+
+            PreparedStatement psReserva = con.prepareStatement(queryReserva);
+            psReserva.setInt(1, codigo);
+
+            int reservaCancelada = psReserva.executeUpdate();
+
+            PreparedStatement psAuto = con.prepareStatement(queryAuto);
+            psAuto.setString(1, matricula);
+
+            int autoLiberado = psAuto.executeUpdate();
+
+            if (reservaCancelada == 1 && autoLiberado == 1) {
+                con.commit();
+
+                psReserva.close();
+                psAuto.close();
+
+                return true;
+            }
+
+            con.rollback();
+
+            psReserva.close();
+            psAuto.close();
+
+        } catch (SQLException e) {
+            try {
+                con.rollback();
+            } catch (SQLException errorRollback) {
+                System.out.println(errorRollback.getMessage());
+            }
+
+            System.out.println("Error al cancelar reserva: " + e.getMessage());
+
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return false;
     }
 
     @Override

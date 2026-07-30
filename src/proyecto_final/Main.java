@@ -103,7 +103,8 @@ public class Main {
         EmpleadoControlador empControlador = new EmpleadoControlador(empCrearVista, empListarVista, empActVista, empEliVista, daoEmpleado, daoUsuario);
         ClienteControlador cliControlador = new ClienteControlador(cliCrearVista, cliListarVista, cliActualizarVista, cliEliminarVista, daoCliente);
         AutoControlador autoControlador = new AutoControlador(autCrearVista, autListarVista, autActualizarVista, autEliminarVista, daoTipoAuto, daoMarca, daoModelo, daoAuto);
-        ReservaControlador reservaControlador = new ReservaControlador(principalVista, cliCrearVista, resCrearVista, resListarVista, resActualizarVista, daoCliente, daoAuto, daoReserva);
+        ReservaControlador reservaControlador = new ReservaControlador(principalVista, cliCrearVista, resCrearVista, resListarVista, resActualizarVista, resEliminarVista, daoCliente, daoAuto, daoReserva);
+
         ContratoControlador contratoControlador = new ContratoControlador(conCrearVista, daoCliente, daoReserva, daoServicio, daoAuto, daoContrato);
     }
     
