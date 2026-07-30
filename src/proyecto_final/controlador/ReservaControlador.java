@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JTextField;
@@ -20,6 +21,7 @@ import proyecto_final.vista.SistemaVista;
 import proyecto_final.vista.clientes.CliCrearVista;
 import proyecto_final.vista.reservas.ResActualizarVista;
 import proyecto_final.vista.reservas.ResCrearVista;
+import proyecto_final.vista.reservas.ResEliminarVista;
 import proyecto_final.vista.reservas.ResListarVista;
 
 public class ReservaControlador {
@@ -28,17 +30,19 @@ public class ReservaControlador {
     private ResCrearVista resCrearVista;
     private ResListarVista resListarVista;
     private ResActualizarVista resActualizarVista;
+    private ResEliminarVista resEliminarVista;
     private DaoCliente daoCliente;
     private DaoAuto daoAuto;
     private DaoReserva daoReserva;
 
     public ReservaControlador(SistemaVista sistemaVista, CliCrearVista cliCrearVista, ResCrearVista resCrearVista, ResListarVista resListarVista, ResActualizarVista resActualizarVista, 
-                              DaoCliente daoCliente, DaoAuto daoAuto, DaoReserva daoReserva) {
+                              ResEliminarVista resEliminarVista, DaoCliente daoCliente, DaoAuto daoAuto, DaoReserva daoReserva) {
         this.sistemaVista = sistemaVista;
         this.cliCrearVista = cliCrearVista;
         this.resCrearVista = resCrearVista;
         this.resListarVista = resListarVista;
         this.resActualizarVista = resActualizarVista;
+        this.resEliminarVista = resEliminarVista;
         this.daoCliente = daoCliente;
         this.daoAuto = daoAuto;
         this.daoReserva = daoReserva;
@@ -88,6 +92,16 @@ public class ReservaControlador {
         // Actualizar Reserva
         resActualizarVista.getBtnConfirmar().addActionListener((e) -> {
             actualizarReserva();
+        });
+        
+        // Buscar Reserva Eliminar
+        resEliminarVista.getBtnBuscar().addActionListener((e) -> {
+            buscarReservaEliminar();
+        });
+        
+        // Eliminar Reserva
+        resEliminarVista.getBtnConfirmar().addActionListener((e) -> {
+            eliminarReserva();
         });
     }
     
@@ -354,6 +368,60 @@ public class ReservaControlador {
             }
 
             resActualizarVista.mostrarMensajes("No se pudo actualizar la reserva");
+        }
+    }
+    
+    private boolean buscarReservaEliminar(){
+        String codigoTexto = resEliminarVista.getTxtBusqueda().getText().trim();
+
+        if (codigoTexto.isEmpty()) {
+            resEliminarVista.mostrarMensajes("Campo de busqueda vacío");
+            return false;
+        }
+
+        if (!codigoTexto.matches("\\d+")) {
+            resEliminarVista.mostrarMensajes("El código debe ser numérico");
+            return false;
+        }
+
+        List<ReservaDTO> reservas = daoReserva.buscarReserva(Integer.parseInt(codigoTexto));
+
+        if (reservas == null || reservas.isEmpty()) {
+            resEliminarVista.mostrarMensajes("Reserva no encontrada");
+            return false;
+        }
+
+        ReservaDTO reserva = reservas.get(0);
+
+        if (!reserva.getEstado().equals("ACTIVA")) {
+            resEliminarVista.mostrarMensajes("Solo se pueden cancelar reservas activas");
+            return false;
+        }
+
+        resEliminarVista.cargarDatosReserva(reservas);
+
+        return true;
+    }
+    
+    private void eliminarReserva(){
+        if (!buscarReservaEliminar()) {
+            resEliminarVista.mostrarMensajes("Nada para eliminar");
+            return;
+        }
+
+        int codigo = Integer.parseInt(
+                resEliminarVista.getTxtBusqueda().getText().trim()
+        );
+
+        String matricula = resEliminarVista.getTxtMatricula().getText().trim();
+
+        boolean elimino = daoReserva.eliminarReserva(codigo, matricula);
+
+        if (elimino) {
+            resEliminarVista.mostrarMensajes("Reserva cancelada correctamente");
+            resEliminarVista.limpiarCampos();
+        } else {
+            resEliminarVista.mostrarMensajes("Error al cancelar la reserva");
         }
     }
 }
