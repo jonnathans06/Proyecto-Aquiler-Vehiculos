@@ -70,4 +70,9 @@ public class ReservaDTO {
     public String getEstado() {
         return estado;
     }
+    
+    @Override
+    public String toString() {
+        return "Reserva " + codigo + " - " + auto + " - " + matricula;
+    }
 }

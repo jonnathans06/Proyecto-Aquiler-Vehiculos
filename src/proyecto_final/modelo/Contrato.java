@@ -4,10 +4,10 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class Contrato {
+
     private int conCodigo;
     private LocalDate conFechaInicio;
     private LocalDate conFechaFin;
-    private int conDias;
     private double conSubtotalAuto;
     private double conSubtotalServicios;
     private double conIva;
@@ -16,22 +16,43 @@ public class Contrato {
     private Auto conAuto;
     private Usuario conUsuario;
     private Reserva conReserva;
+    private String conEstado;
 
-    public Contrato(int conCodigo, LocalDate conFechaInicio, LocalDate conFechaFin, int conDias,
-            double conSubtotalAuto, double conSubtotalServicios, double conIva, double conTotal,
-            Cliente conCliente, Auto conAuto, Usuario conUsuario, Reserva conReserva) {
+    public Contrato(int conCodigo, LocalDate conFechaInicio, LocalDate conFechaFin,
+            double conSubtotalAuto, double conSubtotalServicios, double conIva,
+            double conTotal, Cliente conCliente, Auto conAuto, Usuario conUsuario,
+            Reserva conReserva, String conEstado) {
+
         this.conCodigo = conCodigo;
         this.conFechaInicio = conFechaInicio;
         this.conFechaFin = conFechaFin;
-        this.conDias = conDias;
         this.conSubtotalAuto = conSubtotalAuto;
         this.conSubtotalServicios = conSubtotalServicios;
         this.conIva = conIva;
         this.conTotal = conTotal;
         this.conCliente = conCliente;
-        this.conUsuario = conUsuario;
         this.conAuto = conAuto;
+        this.conUsuario = conUsuario;
         this.conReserva = conReserva;
+        this.conEstado = conEstado;
+    }
+
+    public Contrato(LocalDate conFechaInicio, LocalDate conFechaFin,
+            double conSubtotalAuto, double conSubtotalServicios, double conIva,
+            double conTotal, Cliente conCliente, Auto conAuto, Usuario conUsuario,
+            Reserva conReserva) {
+
+        this.conFechaInicio = conFechaInicio;
+        this.conFechaFin = conFechaFin;
+        this.conSubtotalAuto = conSubtotalAuto;
+        this.conSubtotalServicios = conSubtotalServicios;
+        this.conIva = conIva;
+        this.conTotal = conTotal;
+        this.conCliente = conCliente;
+        this.conAuto = conAuto;
+        this.conUsuario = conUsuario;
+        this.conReserva = conReserva;
+        this.conEstado = "ACTIVO";
     }
 
     public int getConCodigo() {
@@ -58,12 +79,20 @@ public class Contrato {
         this.conFechaFin = conFechaFin;
     }
 
-    public int getConDias() {
-        return conDias;
+    public long getConDias() {
+        if (conFechaInicio == null || conFechaFin == null) {
+            return 0;
+        }
+
+        return ChronoUnit.DAYS.between(conFechaInicio, conFechaFin);
     }
 
     public double getConSubtotalAuto() {
         return conSubtotalAuto;
+    }
+
+    public void setConSubtotalAuto(double conSubtotalAuto) {
+        this.conSubtotalAuto = conSubtotalAuto;
     }
 
     public double getConSubtotalServicios() {
@@ -78,8 +107,16 @@ public class Contrato {
         return conIva;
     }
 
+    public void setConIva(double conIva) {
+        this.conIva = conIva;
+    }
+
     public double getConTotal() {
         return conTotal;
+    }
+
+    public void setConTotal(double conTotal) {
+        this.conTotal = conTotal;
     }
 
     public Cliente getConCliente() {
@@ -90,14 +127,6 @@ public class Contrato {
         this.conCliente = conCliente;
     }
 
-    public Usuario getConUsuario() {
-        return conUsuario;
-    }
-
-    public void setConUsuario(Usuario conUsuario) {
-        this.conUsuario = conUsuario;
-    }
-
     public Auto getConAuto() {
         return conAuto;
     }
@@ -106,12 +135,38 @@ public class Contrato {
         this.conAuto = conAuto;
     }
 
+    public Usuario getConUsuario() {
+        return conUsuario;
+    }
+
+    public void setConUsuario(Usuario conUsuario) {
+        this.conUsuario = conUsuario;
+    }
+
+    public Reserva getConReserva() {
+        return conReserva;
+    }
+
+    public void setConReserva(Reserva conReserva) {
+        this.conReserva = conReserva;
+    }
+
+    public String getConEstado() {
+        return conEstado;
+    }
+
+    public void setConEstado(String conEstado) {
+        this.conEstado = conEstado;
+    }
+
     @Override
     public String toString() {
-        return "Contrato N°: " + conCodigo 
-                + ", Dias: " + conDias 
-                + ", Total: $" + conTotal 
-                + ", Cliente: " + conCliente.getCliNombre() + " " + conCliente.getCliApellido()
-                + ", Auto: " + conAuto.getAutMatricula();
+        return "Contrato N°: " + conCodigo
+                + ", Días: " + getConDias()
+                + ", Total: $" + conTotal
+                + ", Cliente: " + conCliente.getCliNombre() + " "
+                + conCliente.getCliApellido()
+                + ", Auto: " + conAuto.getAutMatricula()
+                + ", Estado: " + conEstado;
     }
 }
