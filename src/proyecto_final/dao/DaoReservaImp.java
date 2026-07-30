@@ -94,7 +94,7 @@ public class DaoReservaImp implements DaoReserva{
         
         String query = "select r.res_codigo as codigo, r.res_fecha_hora_inicio as fecha_inicio, r.res_fecha_hora_fin as fecha_fin, "
                      + "cl.cli_cedula as cedula_cliente, cl.cli_nombre || ' ' || cl.cli_apellido as cliente, "
-                     + "ma.mar_nombre || ' ' || mo.mod_nombre as auto, "
+                     + "au.aut_matricula as Matricula, ma.mar_nombre || ' ' || mo.mod_nombre as auto, "
                      + "em.emp_nombre || ' ' || em.emp_apellido as empleado, r.res_estado as estado "
                      + "from alq_reservas r "
                      + "inner join alq_clientes cl on r.cli_cedula = cl.cli_cedula "
@@ -116,6 +116,7 @@ public class DaoReservaImp implements DaoReserva{
                     rs.getTimestamp("fecha_fin").toLocalDateTime(),
                     rs.getString("cedula_cliente"),
                     rs.getString("cliente"),
+                    rs.getString("Matricula"),
                     rs.getString("auto"),
                     rs.getString("empleado"),
                     rs.getString("estado")
@@ -135,7 +136,35 @@ public class DaoReservaImp implements DaoReserva{
 
     @Override
     public boolean actualizarReserva(Reserva reserva) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String query = "update alq_reservas set res_fecha_hora_inicio = ?, res_fecha_hora_fin = ?, "
+                 + "cli_cedula = ?, aut_matricula = ?, usu_username = ?, res_estado = ? "
+                 + "where res_codigo = ?";
+
+    try {
+        PreparedStatement ps = con.prepareStatement(query);
+
+            ps.setTimestamp(1, Timestamp.valueOf(reserva.getResFechaHoraInicio()));
+            ps.setTimestamp(2, Timestamp.valueOf(reserva.getResFechaHoraFin()));
+            ps.setString(3, reserva.getResCliente().getCliCedula());
+            ps.setString(4, reserva.getResAuto().getAutMatricula());
+            ps.setString(5, reserva.getResUsuario());
+            ps.setString(6, reserva.getResEstado());
+            ps.setInt(7, reserva.getResCodigo());
+
+            int reservaActualizada = ps.executeUpdate();
+            ps.close();
+
+            if (reservaActualizada == 1) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al actualizar reserva: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return false;
     }
 
     @Override
@@ -149,7 +178,7 @@ public class DaoReservaImp implements DaoReserva{
         
         String query = "select r.res_codigo as codigo, r.res_fecha_hora_inicio as fecha_inicio, r.res_fecha_hora_fin as fecha_fin, "
                      + "cl.cli_cedula as cedula_cliente, cl.cli_nombre || ' ' || cl.cli_apellido as cliente, "
-                     + "ma.mar_nombre || ' ' || mo.mod_nombre as auto, "
+                     + "au.aut_matricula as Matricula, ma.mar_nombre || ' ' || mo.mod_nombre as auto, "
                      + "em.emp_nombre || ' ' || em.emp_apellido as empleado, r.res_estado as estado "
                      + "from alq_reservas r "
                      + "inner join alq_clientes cl on r.cli_cedula = cl.cli_cedula "
@@ -173,6 +202,7 @@ public class DaoReservaImp implements DaoReserva{
                     rs.getTimestamp("fecha_fin").toLocalDateTime(),
                     rs.getString("cedula_cliente"),
                     rs.getString("cliente"),
+                    rs.getString("Matricula"),
                     rs.getString("auto"),
                     rs.getString("empleado"),
                     rs.getString("estado")
@@ -189,4 +219,34 @@ public class DaoReservaImp implements DaoReserva{
 
         return reservas;
     }   
+
+    @Override
+    public ReservaDTO buscarReservaCruda(int codigo) {
+        String query = "select * from alq_reservas where res_codigo = ?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, codigo);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                return new ReservaDTO(
+                    rs.getInt("res_codigo"),
+                    rs.getTimestamp("res_fecha_hora_inicio").toLocalDateTime(),
+                    rs.getTimestamp("res_fecha_hora_fin").toLocalDateTime(),
+                    rs.getString("cli_cedula"),
+                    rs.getString("aut_matricula"),
+                    rs.getString("usu_username"),
+                    rs.getString("res_estado")
+                );
+            }
+
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println("Error al buscar reserva: " + e.getMessage());
+        }
+        
+        return null;
+    }
 }

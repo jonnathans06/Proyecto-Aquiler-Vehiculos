@@ -11,4 +11,5 @@ public interface DaoAuto {
     boolean actualizarAuto(Auto auto);
     boolean eliminarAuto(Auto auto);
     List<AutoDTO> buscarAutoReserva(String tipo);
+    boolean cambiarEstadoAuto(String matricula, String estado);
 }

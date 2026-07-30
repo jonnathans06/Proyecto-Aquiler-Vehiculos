@@ -11,4 +11,5 @@ public interface DaoReserva {
     boolean actualizarReserva(Reserva reserva);
     boolean eliminarReserva(Reserva reserva);
     List<ReservaDTO> buscarReserva(int codigo);
+    ReservaDTO buscarReservaCruda(int codigo);
 }
