@@ -1,6 +1,7 @@
 package proyecto_final.dao;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import proyecto_final.dao.interfaces.DaoContrato;
@@ -277,13 +278,13 @@ public class DaoContratoImp implements DaoContrato{
     public List<DetalleContratoDTO> listarDetallesContrato(int codigoContrato) {
         List<DetalleContratoDTO> detalles = new ArrayList<>();
 
-        String query = "select d.det_ser_codigo, s.ser_nombre, "
-                     + "d.det_ser_precio_unitario, d.det_cantidad, "
-                     + "d.det_ser_iva, d.con_ser_subtotal, d.det_ser_total "
-                     + "from alq_contrato_servicios_detalles d "
-                     + "inner join alq_servicios s on d.ser_codigo = s.ser_codigo "
-                     + "where d.con_codigo = ? "
-                     + "order by d.det_ser_codigo";
+        String query = "select d.det_ser_codigo, d.ser_codigo, s.ser_nombre, "
+                + "d.det_ser_precio_unitario, d.det_cantidad, "
+                + "d.det_ser_iva, d.con_ser_subtotal, d.det_ser_total "
+                + "from alq_contrato_servicios_detalles d "
+                + "inner join alq_servicios s on d.ser_codigo = s.ser_codigo "
+                + "where d.con_codigo = ? "
+                + "order by d.det_ser_codigo";
 
         try {
             PreparedStatement ps = con.prepareStatement(query);
@@ -294,6 +295,7 @@ public class DaoContratoImp implements DaoContrato{
             while (rs.next()) {
                 detalles.add(new DetalleContratoDTO(
                         rs.getInt("det_ser_codigo"),
+                        rs.getInt("ser_codigo"),
                         rs.getString("ser_nombre"),
                         rs.getDouble("det_ser_precio_unitario"),
                         rs.getInt("det_cantidad"),
@@ -311,5 +313,225 @@ public class DaoContratoImp implements DaoContrato{
         }
 
         return detalles;
+    }
+    
+    @Override
+    public ContratoDTO buscarContratoPorCodigo(int codigoContrato) {
+        String query = "select c.con_codigo, c.res_codigo, c.con_fecha_inicio, "
+                + "c.con_fecha_fin, "
+                + "ma.mar_nombre || ' ' || mo.mod_nombre as vehiculo, "
+                + "c.aut_matricula, "
+                + "cl.cli_nombre || ' ' || cl.cli_apellido as cliente, "
+                + "em.emp_nombre || ' ' || em.emp_apellido as usuario, "
+                + "c.con_subtotal_auto, c.con_subtotal_servicios, "
+                + "(c.con_subtotal_auto + c.con_subtotal_servicios) as subtotal_total, "
+                + "c.con_iva, c.con_total, c.con_estado "
+                + "from alq_contratos c "
+                + "inner join alq_clientes cl on c.cli_cedula = cl.cli_cedula "
+                + "inner join alq_autos au on c.aut_matricula = au.aut_matricula "
+                + "inner join alq_modelos mo on au.mod_codigo = mo.mod_codigo "
+                + "inner join alq_marcas ma on mo.mar_codigo = ma.mar_codigo "
+                + "inner join alq_usuarios u on c.usu_username = u.usu_username "
+                + "inner join alq_empleados em on u.emp_cedula = em.emp_cedula "
+                + "where c.con_codigo = ?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, codigoContrato);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                ContratoDTO contrato = new ContratoDTO(
+                        rs.getInt("con_codigo"),
+                        rs.getInt("res_codigo"),
+                        rs.getDate("con_fecha_inicio").toLocalDate(),
+                        rs.getDate("con_fecha_fin").toLocalDate(),
+                        rs.getString("vehiculo"),
+                        rs.getString("aut_matricula"),
+                        rs.getString("cliente"),
+                        rs.getString("usuario"),
+                        rs.getDouble("con_subtotal_auto"),
+                        rs.getDouble("con_subtotal_servicios"),
+                        rs.getDouble("subtotal_total"),
+                        rs.getDouble("con_iva"),
+                        rs.getDouble("con_total"),
+                        rs.getString("con_estado")
+                );
+
+                rs.close();
+                ps.close();
+                return contrato;
+            }
+
+            rs.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            System.out.println("Error al buscar contrato: " + e.getMessage());
+        }
+
+        return null;
+    }
+    
+    @Override
+    public boolean actualizarContrato(int codigoContrato, LocalDate fechaInicio, LocalDate fechaFin, double subtotalAuto, double subtotalServicios, double iva, double total, List<DetalleServicioDTO> detalles) {
+        String queryContrato = "update alq_contratos set con_fecha_inicio = ?, con_fecha_fin = ?, "
+                + "con_subtotal_auto = ?, con_subtotal_servicios = ?, con_iva = ?, con_total = ? "
+                + "where con_codigo = ?";
+
+        String queryEliminarDetalles = "delete from alq_contrato_servicios_detalles where con_codigo = ?";
+
+        String queryInsertarDetalle = "insert into alq_contrato_servicios_detalles "
+                + "(det_ser_codigo, det_cantidad, det_ser_precio_unitario, con_ser_subtotal, "
+                + "det_ser_iva, det_ser_total, con_codigo, ser_codigo) "
+                + "values (seq_alq_contrato_servicios_detalles.nextval, ?, ?, ?, ?, ?, ?, ?)";
+
+        PreparedStatement psContrato = null;
+        PreparedStatement psEliminar = null;
+        PreparedStatement psDetalle = null;
+
+        try {
+            con.setAutoCommit(false);
+
+            psContrato = con.prepareStatement(queryContrato);
+            psContrato.setDate(1, java.sql.Date.valueOf(fechaInicio));
+            psContrato.setDate(2, java.sql.Date.valueOf(fechaFin));
+            psContrato.setDouble(3, subtotalAuto);
+            psContrato.setDouble(4, subtotalServicios);
+            psContrato.setDouble(5, iva);
+            psContrato.setDouble(6, total);
+            psContrato.setInt(7, codigoContrato);
+
+            int contratoActualizado = psContrato.executeUpdate();
+
+            if (contratoActualizado != 1) {
+                con.rollback();
+                return false;
+            }
+
+            psEliminar = con.prepareStatement(queryEliminarDetalles);
+            psEliminar.setInt(1, codigoContrato);
+            psEliminar.executeUpdate();
+
+            if (detalles != null && !detalles.isEmpty()) {
+                psDetalle = con.prepareStatement(queryInsertarDetalle);
+
+                for (DetalleServicioDTO detalle : detalles) {
+                    psDetalle.setInt(1, detalle.getCantidad());
+                    psDetalle.setDouble(2, detalle.getPrecioUnitario());
+                    psDetalle.setDouble(3, detalle.getSubtotal());
+                    psDetalle.setDouble(4, detalle.getIva());
+                    psDetalle.setDouble(5, detalle.getTotal());
+                    psDetalle.setInt(6, codigoContrato);
+                    psDetalle.setInt(7, detalle.getCodigoServicio());
+
+                    int detalleInsertado = psDetalle.executeUpdate();
+
+                    if (detalleInsertado != 1) {
+                        con.rollback();
+                        return false;
+                    }
+                }
+            }
+
+            con.commit();
+            return true;
+
+        } catch (SQLException e) {
+            try {
+                con.rollback();
+            } catch (SQLException error) {
+                System.out.println("Error en rollback: " + error.getMessage());
+            }
+
+            System.out.println("Error al actualizar contrato: " + e.getMessage());
+            return false;
+
+        } finally {
+            try {
+                if (psContrato != null) {
+                    psContrato.close();
+                }
+
+                if (psEliminar != null) {
+                    psEliminar.close();
+                }
+
+                if (psDetalle != null) {
+                    psDetalle.close();
+                }
+
+                con.setAutoCommit(true);
+
+            } catch (SQLException e) {
+                System.out.println("Error al cerrar recursos: " + e.getMessage());
+            }
+        }
+    }
+    
+    @Override
+    public boolean cancelarContrato(int codigoContrato, String matricula) {
+        String queryContrato = "update alq_contratos set con_estado = 'INACTIVO' "
+                + "where con_codigo = ? and con_estado = 'ACTIVO'";
+
+        String queryAuto = "update alq_autos set aut_estado = 'ACTIVO' "
+                + "where aut_matricula = ? and aut_estado = 'EN_CONTRATO'";
+
+        PreparedStatement psContrato = null;
+        PreparedStatement psAuto = null;
+
+        try {
+            con.setAutoCommit(false);
+
+            psContrato = con.prepareStatement(queryContrato);
+            psContrato.setInt(1, codigoContrato);
+
+            int contratoActualizado = psContrato.executeUpdate();
+
+            if (contratoActualizado != 1) {
+                con.rollback();
+                return false;
+            }
+
+            psAuto = con.prepareStatement(queryAuto);
+            psAuto.setString(1, matricula);
+
+            int autoActualizado = psAuto.executeUpdate();
+
+            if (autoActualizado != 1) {
+                con.rollback();
+                return false;
+            }
+
+            con.commit();
+            return true;
+
+        } catch (SQLException e) {
+            try {
+                con.rollback();
+            } catch (SQLException error) {
+                System.out.println("Error en rollback: " + error.getMessage());
+            }
+
+            System.out.println("Error al cancelar contrato: " + e.getMessage());
+            return false;
+
+        } finally {
+            try {
+                if (psContrato != null) {
+                    psContrato.close();
+                }
+
+                if (psAuto != null) {
+                    psAuto.close();
+                }
+
+                con.setAutoCommit(true);
+
+            } catch (SQLException e) {
+                System.out.println("Error al cerrar recursos: " + e.getMessage());
+            }
+        }
     }
 }

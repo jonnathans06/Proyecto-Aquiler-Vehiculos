@@ -11,7 +11,9 @@ import proyecto_final.vista.clientes.CliActualizarVista;
 import proyecto_final.vista.clientes.CliCrearVista;
 import proyecto_final.vista.clientes.CliEliminarVista;
 import proyecto_final.vista.clientes.CliListarVista;
+import proyecto_final.vista.contratos.ConActualizarVista;
 import proyecto_final.vista.contratos.ConCrearVista;
+import proyecto_final.vista.contratos.ConEliminarVista;
 import proyecto_final.vista.contratos.ConListarVista;
 import proyecto_final.vista.empleados.EmpActualizarVista;
 import proyecto_final.vista.empleados.EmpCrearVista;
@@ -46,13 +48,15 @@ public class SistemaVista extends javax.swing.JFrame {
     
     private ConCrearVista conCrearVista;
     private ConListarVista conListarVista;
+    private ConActualizarVista conActualizarVista;
+    private ConEliminarVista conEliminarVista;
 
             
     public SistemaVista(EmpCrearVista empCrearVista, EmpListarVista empListarVista, EmpActualizarVista empActVista, EmpEliminarVista empEliVista,
                         CliCrearVista cliCrearVista, CliListarVista cliListarVista, CliActualizarVista cliActualizarVista, CliEliminarVista cliEliminarVista,
                         AutCrearVista autCrearVista, AutListarVista autListarVista, AutActualizarVista autActualizarVista, AutEliminarVista autEliminarVista,
                         ResCrearVista resCrearVista, ResListarVista resListarVista, ResActualizarVista resActualizarVista, ResEliminarVista resEliminarVista, 
-                        ConCrearVista conCrearVista, ConListarVista conListarVista) {
+                        ConCrearVista conCrearVista, ConListarVista conListarVista, ConActualizarVista conActualizarVista, ConEliminarVista conEliminarVista) {
         this.empCrearVista = empCrearVista;
         this.empListarVista = empListarVista;
         this.empActVista = empActVista;
@@ -71,6 +75,8 @@ public class SistemaVista extends javax.swing.JFrame {
         this.resEliminarVista = resEliminarVista;
         this.conCrearVista = conCrearVista;
         this.conListarVista = conListarVista;
+        this.conActualizarVista = conActualizarVista;
+        this.conEliminarVista = conEliminarVista;
         initComponents();
         setTitle("Rent-a-car Cuenca");
         setLocationRelativeTo(null);
@@ -216,6 +222,20 @@ public class SistemaVista extends javax.swing.JFrame {
             conListarVista.toFront();
             conListarVista.setVisible(true);
         });
+        
+        //Actualizar 
+        conActualizarItemMenu.addActionListener((e) -> {
+            desktopPane.add(conActualizarVista);
+            conActualizarVista.toFront();
+            conActualizarVista.setVisible(true);
+        });
+        
+        //Eliminar
+        conEliminarItemMenu.addActionListener((e) -> {
+            desktopPane.add(conEliminarVista);
+            conEliminarVista.toFront();
+            conEliminarVista.setVisible(true);
+        });
     }
     
     public static void addComponente(JDesktopPane desktopPane, JInternalFrame jFrame){
@@ -264,6 +284,8 @@ public class SistemaVista extends javax.swing.JFrame {
         jmqnu2 = new javax.swing.JMenu();
         conCrearItemMenu = new javax.swing.JMenuItem();
         conListarItemMenu = new javax.swing.JMenuItem();
+        conActualizarItemMenu = new javax.swing.JMenuItem();
+        conEliminarItemMenu = new javax.swing.JMenuItem();
         cerrarSesionMenu = new javax.swing.JMenu();
         cerrarSesionMenuItem = new javax.swing.JMenuItem();
 
@@ -363,6 +385,12 @@ public class SistemaVista extends javax.swing.JFrame {
         conListarItemMenu.setText("Listar");
         jmqnu2.add(conListarItemMenu);
 
+        conActualizarItemMenu.setText("Actualizar");
+        jmqnu2.add(conActualizarItemMenu);
+
+        conEliminarItemMenu.setText("Elimiinar");
+        jmqnu2.add(conEliminarItemMenu);
+
         menuBar.add(jmqnu2);
 
         cerrarSesionMenu.setForeground(new java.awt.Color(81, 89, 108));
@@ -428,7 +456,9 @@ public class SistemaVista extends javax.swing.JFrame {
     private javax.swing.JMenuItem cliCrearitemMenu;
     private javax.swing.JMenuItem cliEliminarItemMenu;
     private javax.swing.JMenuItem cliListarItemMenu;
+    private javax.swing.JMenuItem conActualizarItemMenu;
     private javax.swing.JMenuItem conCrearItemMenu;
+    private javax.swing.JMenuItem conEliminarItemMenu;
     private javax.swing.JMenuItem conListarItemMenu;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenuItem empActualizarMenuItem;

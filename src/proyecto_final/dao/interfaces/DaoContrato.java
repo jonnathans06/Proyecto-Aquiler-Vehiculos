@@ -1,5 +1,6 @@
 package proyecto_final.dao.interfaces;
 
+import java.time.LocalDate;
 import java.util.List;
 import proyecto_final.dto.ContratoDTO;
 import proyecto_final.dto.DetalleContratoDTO;
@@ -11,4 +12,7 @@ public interface DaoContrato {
     List<ContratoDTO> buscarContratosPorReserva(int codigoReserva);
     List<ContratoDTO> listarContratos();
     List<DetalleContratoDTO> listarDetallesContrato(int codigoContrato);
+    ContratoDTO buscarContratoPorCodigo(int codigoContrato);
+    boolean actualizarContrato(int codigoContrato, LocalDate fechaInicio, LocalDate fechaFin, double subtotalAuto, double subtotalServicios, double iva, double total, List<DetalleServicioDTO> detalles);
+    boolean cancelarContrato(int codigoContrato, String matricula);
 }

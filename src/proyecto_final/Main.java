@@ -35,7 +35,9 @@ import proyecto_final.vista.clientes.CliActualizarVista;
 import proyecto_final.vista.clientes.CliCrearVista;
 import proyecto_final.vista.clientes.CliEliminarVista;
 import proyecto_final.vista.clientes.CliListarVista;
+import proyecto_final.vista.contratos.ConActualizarVista;
 import proyecto_final.vista.contratos.ConCrearVista;
+import proyecto_final.vista.contratos.ConEliminarVista;
 import proyecto_final.vista.contratos.ConListarVista;
 import proyecto_final.vista.empleados.EmpActualizarVista;
 import proyecto_final.vista.empleados.EmpCrearVista;
@@ -78,13 +80,15 @@ public class Main {
         //Vistas Contratos
         ConCrearVista conCrearVista = new ConCrearVista();
         ConListarVista conListarVista = new ConListarVista();
+        ConActualizarVista conActualizarVista = new ConActualizarVista();
+        ConEliminarVista conEliminarVista = new ConEliminarVista();
         
         //Vista General
         SistemaVista principalVista = new SistemaVista(empCrearVista, empListarVista, empActVista, empEliVista, 
                                                        cliCrearVista, cliListarVista, cliActualizarVista, cliEliminarVista,
                                                        autCrearVista, autListarVista, autActualizarVista, autEliminarVista,
                                                        resCrearVista, resListarVista, resActualizarVista, resEliminarVista,
-                                                       conCrearVista, conListarVista);
+                                                       conCrearVista, conListarVista, conActualizarVista, conEliminarVista);
         
         // Daos
         DaoEmpleado daoEmpleado = new DaoEmpleadoImp();
@@ -105,7 +109,7 @@ public class Main {
         AutoControlador autoControlador = new AutoControlador(autCrearVista, autListarVista, autActualizarVista, autEliminarVista, daoTipoAuto, daoMarca, daoModelo, daoAuto);
         ReservaControlador reservaControlador = new ReservaControlador(principalVista, cliCrearVista, resCrearVista, resListarVista, resActualizarVista, resEliminarVista, daoCliente, daoAuto, daoReserva);
 
-        ContratoControlador contratoControlador = new ContratoControlador(conCrearVista, conListarVista, daoCliente, daoReserva, daoServicio, daoAuto, daoContrato);
+        ContratoControlador contratoControlador = new ContratoControlador(conCrearVista, conListarVista, conActualizarVista, conEliminarVista, daoCliente, daoReserva, daoServicio, daoAuto, daoContrato);
     }
     
 }

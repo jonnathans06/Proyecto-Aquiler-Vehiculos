@@ -10,12 +10,12 @@ import javax.swing.table.DefaultTableModel;
 import proyecto_final.dto.ContratoDTO;
 import proyecto_final.dto.DetalleContratoDTO;
 
-public class ConListarVista extends javax.swing.JInternalFrame {
+public class ConEliminarVista extends javax.swing.JInternalFrame {
 
-    public ConListarVista() {
+    public ConEliminarVista() {
         initComponents();
         setSize(1280, 730);
-        setTitle("Listar Contrato");
+        setTitle("Cancelar Contrato");
         setVisible(true);
     }
     
@@ -85,10 +85,10 @@ public class ConListarVista extends javax.swing.JInternalFrame {
         return btnLimpiar;
     }
 
-    public JButton getBtnListar() {
-        return btnListar;
+    public JButton getBtnEliminar() {
+        return btnEliminar;
     }
-
+    
     public JTable getTblContrato() {
         return tblContrato;
     }
@@ -115,7 +115,6 @@ public class ConListarVista extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
         txtBusqueda = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
-        btnListar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -123,6 +122,7 @@ public class ConListarVista extends javax.swing.JInternalFrame {
         jPanel6 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblDetalle = new javax.swing.JTable();
+        btnEliminar = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -134,7 +134,7 @@ public class ConListarVista extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 30)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(81, 89, 108));
-        jLabel1.setText("LISTAR CONTRATO");
+        jLabel1.setText("ELIMINAR CONTRATO");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
         javax.swing.GroupLayout panelSuperiorLayout = new javax.swing.GroupLayout(panelSuperior);
@@ -194,13 +194,6 @@ public class ConListarVista extends javax.swing.JInternalFrame {
         btnBuscar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
         btnBuscar.setFocusPainted(false);
 
-        btnListar.setBackground(new java.awt.Color(81, 89, 108));
-        btnListar.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        btnListar.setForeground(new java.awt.Color(255, 255, 255));
-        btnListar.setText("Listar Todo");
-        btnListar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
-        btnListar.setFocusPainted(false);
-
         btnLimpiar.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         btnLimpiar.setForeground(new java.awt.Color(81, 89, 108));
         btnLimpiar.setText("Limpiar");
@@ -216,13 +209,11 @@ public class ConListarVista extends javax.swing.JInternalFrame {
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(82, 82, 82)
                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(65, 65, 65)
                 .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(189, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,7 +223,6 @@ public class ConListarVista extends javax.swing.JInternalFrame {
                     .addComponent(jLabel9)
                     .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar)
-                    .addComponent(btnListar)
                     .addComponent(btnLimpiar))
                 .addGap(22, 22, 22))
         );
@@ -272,8 +262,8 @@ public class ConListarVista extends javax.swing.JInternalFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -337,6 +327,13 @@ public class ConListarVista extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btnEliminar.setBackground(new java.awt.Color(81, 89, 108));
+        btnEliminar.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminar.setText("Eliminar");
+        btnEliminar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(81, 89, 108), 1, true));
+        btnEliminar.setFocusPainted(false);
+
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
         panelPrincipal.setLayout(panelPrincipalLayout);
         panelPrincipalLayout.setHorizontalGroup(
@@ -345,10 +342,15 @@ public class ConListarVista extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addGap(68, 68, 68)
-                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                                .addGap(68, 68, 68)
+                                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                                .addGap(550, 550, 550)
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(490, 490, 490)
                         .addComponent(panelInferior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(panelSuperior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -367,7 +369,9 @@ public class ConListarVista extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEliminar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -391,8 +395,8 @@ public class ConListarVista extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
-    private javax.swing.JButton btnListar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
